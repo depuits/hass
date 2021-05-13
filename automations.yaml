@@ -1,0 +1,393 @@
+- id: '1600863687214'
+  alias: Gate notification
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: cover.street_gate
+    to: open
+  condition: []
+  action:
+  - service: script.gate_notification
+  mode: single
+- id: '1600867626827'
+  alias: Tv turn on when playing media
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: media_player.cyril
+    to: playing
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.living_room_tv
+  mode: single
+- id: '1600867837351'
+  alias: Tv turn off when stopping media
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: media_player.cyril
+    from: playing
+    for: 00:10:00
+  - platform: state
+    entity_id: media_player.cyril_cast
+    from: playing
+    for: 00:10:00
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: media_player.cyril
+      state: playing
+    - condition: state
+      entity_id: media_player.cyril_cast
+      state: playing
+  action:
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.living_room_tv
+  mode: restart
+- id: '1600882668507'
+  alias: Tv turned off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.living_room_tv
+    to: 'off'
+    for: '5'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.tv_backlight, light.bookshelf, light.christmas_tree
+  mode: single
+- id: '1601008510611'
+  alias: Tv turned on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.living_room_tv
+    to: 'on'
+  condition: []
+  action:
+  - service: scene.turn_on
+    data: {}
+    entity_id: scene.movie
+  - service: light.turn_on
+    data: {}
+    entity_id: light.christmas_tree
+  - condition: state
+    entity_id: media_player.cyril
+    state: playing
+  - service: mqtt.publish
+    data:
+      topic: app/living/tv/cec/tx
+      payload: 4f:82:10:00
+  mode: single
+- alias: 'Utilities: washing machine notification'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.washing_machine
+    from: 'off'
+    to: 'on'
+  action:
+    service: script.utility_notification
+    data:
+      name: washing_machine
+      emojis: 👚👕
+  id: 987c5eaeb9bd4cc59722816ae1ed9996
+- id: '1602311902597'
+  alias: Climate - Scheduler
+  description: Change thermostat to script schedule.
+  trigger:
+  - platform: time_pattern
+    minutes: '5'
+    hours: '*'
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - service: python_script.thermostat_schedule
+    data: {}
+  mode: single
+- id: '1605446407956'
+  alias: Mood light turn on when motion detected
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.outside_motion
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.front_door_mood
+  - wait_for_trigger:
+    - platform: state
+      entity_id: binary_sensor.outside_motion
+      from: 'on'
+      to: 'off'
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.morning_mood_lights
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.evening_mood_lights
+      state: 'off'
+  - service: light.turn_off
+    data: {}
+    entity_id: light.front_door_mood
+  mode: single
+- id: '1605446626870'
+  alias: Mood light auto turn on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.morning_mood_lights
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.evening_mood_lights
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.front_door_mood, light.christmas_tree
+  mode: single
+- id: '1605450820093'
+  alias: Mood light auto turn off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.morning_mood_lights
+    to: 'off'
+  - platform: state
+    entity_id: binary_sensor.evening_mood_lights
+    to: 'off'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.front_door_mood, light.christmas_tree
+  mode: single
+- id: '1605456961338'
+  alias: Make sure the door lock is closed
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:30'
+  - platform: state
+    entity_id: group.apartment_people
+    from: home
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.front_door
+  mode: single
+- id: '1605865066633'
+  alias: Low speedtest notification
+  description: Check if speedtest values are low. Notify and retest after delay.
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.speedtest_download
+    below: '80'
+  - platform: numeric_state
+    entity_id: sensor.speedtest_upload
+    below: '7'
+  condition: []
+  action:
+  - service: script.speedtest_notification
+    data: {}
+  - delay: 00:10:00
+  - service: speedtestdotnet.speedtest
+    data: {}
+  mode: single
+- id: '1605866142711'
+  alias: Telegram bot /test
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /test
+  condition: []
+  action:
+  - service: notify.default
+    data:
+      message: pong
+  mode: single
+- id: '1605866743260'
+  alias: Telegram bot /speed
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /speed
+  condition: []
+  action:
+  - service: script.speedtest_notification
+  mode: single
+- id: '1605868981905'
+  alias: Telegram bot /gate
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /gate
+  condition: []
+  action:
+  - service: script.gate_notification
+  mode: single
+- id: '1608049588176'
+  alias: NFC Open door
+  description: ''
+  trigger:
+  - platform: event
+    event_type: tag_scanned
+    event_data:
+      tag_id: f03e4827-949f-448a-ae71-0a95722e2918
+  condition: []
+  action:
+  - service: script.open_door
+    data: {}
+  mode: single
+- id: '1613410955143'
+  alias: Light bedroom ruben turned off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.bedroom_ruben
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.bedroom_ruben_dressing
+  mode: single
+- id: '1613977021864'
+  alias: Covers open and close
+  description: Open cover at time and close them at time or after sunset
+  trigger:
+  - platform: time
+    at: '8:00'
+  - platform: time
+    at: '20:00'
+  - platform: numeric_state
+    entity_id: sun.sun
+    value_template: '{{ state_attr(''sun.sun'', ''elevation'') }}'
+    below: '-5'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: time
+        before: '8:10'
+      sequence:
+      - service: cover.open_cover
+        data: {}
+        entity_id: cover.bedroom_ruben_cover
+    default:
+    - service: cover.close_cover
+      data: {}
+      entity_id: cover.bedroom_ruben_cover
+  mode: single
+- id: '1615555412781'
+  alias: Notify completed torrent
+  trigger:
+    platform: event
+    event_type: transmission_downloaded_torrent
+  action:
+  - service: notify.default
+    data:
+      title: Torrent completed!
+      message: '{{trigger.event.data.name}}'
+- id: '1617705577676'
+  alias: Backup notification
+  description: Send notification if backup script does not return to success after
+    2 hours
+  trigger:
+  - platform: state
+    entity_id: sensor.backup_status
+    from: success
+    for: 02:00:00
+  condition: []
+  action:
+  - service: notify.default
+    data:
+      title: Backups
+      message: Backups not yet completed!
+  mode: single
+- id: '1617706260413'
+  alias: Sonoff Zigbee Switch Ruben
+  description: ''
+  use_blueprint:
+    path: garykrige/zha-sonoff-zigbee-switch.yaml
+    input:
+      sonoff_button: 2f883e2dcb668224fc56343d87fd8bf4
+      toggle_action:
+      - service: cover.stop_cover
+        target:
+          entity_id: cover.bedroom_ruben_cover
+      on_action:
+      - service: cover.toggle
+        target:
+          entity_id: cover.bedroom_ruben_cover
+      off_action:
+      - service: cover.set_cover_position
+        target:
+          entity_id: cover.bedroom_ruben_cover
+        data:
+          position: 55
+- id: '1618245636173'
+  alias: Sonoff Zigbee Switch Doorbell
+  description: ''
+  use_blueprint:
+    path: garykrige/zha-sonoff-zigbee-switch.yaml
+    input:
+      sonoff_button: 3fcc2039ed3b4e89b85ac95ee8e8ee0e
+      toggle_action:
+      - service: script.doorbell
+- id: '1618581090054'
+  alias: Kitchen button actions
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: app/kitchen/wall/button
+    payload: '2'
+  condition: []
+  action:
+  - service: script.open_door
+  mode: single
+- id: '1619798005890'
+  alias: Babyphone on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_boolean.babyphone
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: ffmpeg.start
+    data:
+      entity_id: binary_sensor.babycam_noise
+  mode: single
+- id: '1619798030009'
+  alias: Babyphone off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_boolean.babyphone
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: ffmpeg.stop
+  mode: single

@@ -1,0 +1,245 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+  customize: !include customize.yaml
+  external_url: !secret url
+  internal_url: !secret url
+  
+frontend:
+  themes: !include_dir_merge_named themes
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies: 
+    - !secret proxy_host
+    
+python_script:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+recorder:
+  exclude:
+    domains:
+      - automation
+      - updater
+      - pi_hole
+    entities:
+      - sensor.nmbs
+      - sensor.nmbs_live_deinze
+      - sensor.washer_total_start
+      - sensor.washer_yesterday
+
+influxdb:
+  host: localhost
+  port: 8086
+  database: hass
+  username: hass
+  password: hass
+  max_retries: 3
+  default_measurement: state
+  exclude:
+    domains:
+      - automation
+      - updater
+    entities:
+      - sensor.nmbs
+      - sensor.nmbs_live_deinze
+      - sensor.washer_total_start
+      - sensor.washer_yesterday
+
+    
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+light: !include lights.yaml
+sensor: !include sensors.yaml
+
+binary_sensor:
+  - platform: template
+    sensors:
+      washing_machine:
+        friendly_name: Washing machine
+        value_template: >
+          {{ states("sensor.washing_machine_power") | float(0) > 12 }}
+        delay_off: "00:10:00"
+        icon_template: >
+          {% if is_state("binary_sensor.washing_machine", "on") %}
+            mdi:washing-machine
+          {% else %}
+            mdi:washing-machine-off
+          {% endif %}
+      outside_motion:
+        friendly_name: Outside motion
+        value_template: >
+          {{ 
+              'person' in states("sensor.cctv_motion_detection") 
+              or 'bicycle' in states("sensor.cctv_motion_detection") 
+              or 'car' in states("sensor.cctv_motion_detection") 
+              or 'truck' in states("sensor.cctv_motion_detection") 
+              or 'lwa' in states("sensor.cctv_motion_detection") 
+          }}
+        delay_off: "00:10:00"
+        icon_template: >
+          {% if is_state("binary_sensor.outside_motion", "on") %}
+            mdi:motion-sensor
+          {% else %}
+            mdi:motion-sensor-off
+          {% endif %}
+  - platform: tod
+    name: Morning mood lights
+    after: '05:00'
+    before: sunrise
+  - platform: tod
+    name: Evening mood lights
+    after: sunset
+    before: '23:00'
+    
+  - platform: ffmpeg_noise
+    name: Babycam noise
+    input: !secret babycam_url
+    extra_arguments: -filter:a highpass=f=300,lowpass=f=2500,volume=volume=2 -codec:a libmp3lame -ar 16000
+    #output: -f mp3 icecast://stream_user:stream_pw@127.0.0.1:8000/babyphone.mp3
+    initial_state: false
+    duration: 2
+    reset: 60
+    peak: -32
+    
+    
+cover:
+  - platform: mqtt
+    name: Street gate
+    unique_id: 'home/entry/gate/front'
+    state_topic: 'home/entry/gate/front'
+    command_topic: 'home/entry/gate/front/set'
+    device_class: gate
+    payload_open: open
+    state_open: open
+    payload_close: close
+    state_closed: close
+    
+  - platform: mqtt
+    name: Bedroom Ruben cover
+    unique_id: 'house/firstfloor/cover/bedroom'
+    command_topic: 'house/firstfloor/cover/bedroom/command'
+    set_position_topic: 'house/firstfloor/cover/bedroom/position/command'
+    position_topic: 'house/firstfloor/cover/bedroom/position/state'
+    availability_topic: 'house/firstfloor/status'
+    device_class: blind
+  
+switch:
+  - platform: mqtt
+    name: Thermostat switch
+    state_topic: 'app/living/tv/switch/thermostat'
+    command_topic: 'app/living/tv/switch/thermostat/set'
+    unique_id: 'app/living/tv/switch/thermostat'
+    
+  - platform: mqtt
+    name: Front door
+    state_topic: 'app/hall/front/door'
+    command_topic: 'app/hall/front/door/set'
+    unique_id: 'app/hall/frontdoor'
+
+  - platform: mqtt
+    name: Living Room TV
+    command_topic: 'app/living/tv/cec/0/cmd'
+    payload_on: 'on'
+    payload_off: 'off'
+    state_topic: 'app/living/tv/cec/0'
+    availability_topic: 'app/living/tv/bridge/status'
+    unique_id: 'app/living/tv/cec'
+
+media_player:
+  - platform: kodi
+    name: Cyril
+    host: !secret cyril_host
+  - platform: snapcast
+    host: !secret media_host
+  - platform: mpd
+    host: !secret media_host
+    name: webPlayer
+
+telegram_bot:
+  - platform: webhooks
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - !secret telegram_group
+      - !secret telegram_joeri
+
+notify:
+  - name: telegram
+    platform: telegram
+    chat_id: !secret telegram_group
+  - name: cyril
+    platform: kodi
+    host: !secret cyril_host
+  - name: default
+    platform: group
+    services:
+      - service: telegram
+      - service: cyril
+#      - service: notify
+    
+panel_iframe:
+  tasmoadmin:
+    title: TasmoAdmin
+    icon: mdi:lightbulb-on
+    url: http://hass:9541
+    
+climate:
+  - platform: generic_thermostat
+    name: Central Heating
+    heater: switch.thermostat_switch
+    target_sensor: sensor.apartment_temperature #sensor.tv_temperature
+    min_temp: 15
+    max_temp: 28
+    cold_tolerance: 0.5
+    hot_tolerance: 0.5
+    min_cycle_duration:
+      minutes: 1
+    initial_hvac_mode: 'heat'
+    target_temp: 20
+    away_temp: 18
+
+rest_command:
+  mplayer:
+    url: !secret mplayer_command_url
+    method: POST
+    payload: '{"cmd": "{{ cmd }}", "file": "{{ file }}", "value": "{{ value }}"}'
+    content_type:  'application/json; charset=utf-8'
+
+input_boolean:
+  notify_camera_movement:
+    name: Notify when there is movement on a camera
+    icon: mdi:cctv
+  babyphone:
+    name: Babyphone
+    initial: off
+
+camera:
+  - platform: mjpeg
+    name: Front gate
+    mjpeg_url: http://10.163.205.76:8081
+    still_image_url: http://10.163.205.76/picture/1/current/?_username=admin&_signature=e3f5066aeb0936998e814d130aa77cdf70667f5d
+    authentication: basic
+    username: !secret cctv_username
+    password: !secret cctv_password
+  - platform: mjpeg
+    name: Front door apartment
+    mjpeg_url: http://10.163.205.76:8082
+    still_image_url: http://10.163.205.76/picture/2/current/?_username=admin&_signature=d81982a468a76bee5a58282bade0efd3e3f736b5
+    authentication: basic
+    username: !secret cctv_username
+    password: !secret cctv_password
+  - platform: mjpeg
+    name: Backyard
+    mjpeg_url: http://10.163.205.76:8083
+    still_image_url: http://10.163.205.76/picture/3/current/?_username=admin&_signature=9965e229dce9c814625dcca79b7d5c52198f8cae
+    authentication: basic
+    username: !secret cctv_username
+    password: !secret cctv_password

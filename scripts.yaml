@@ -1,0 +1,106 @@
+utility_notification:
+  mode: parallel
+  max: 20
+  fields:
+    name:
+      description: name
+      example: washing_machine
+    emojis:
+      description: emojis
+      example: 👚👕
+  variables:
+    total_sensor: '{{ ''sensor.{}_{}''.format(name, ''total'') }}'
+    binary_sensor: '{{ ''binary_sensor.{}''.format(name) }}'
+    friendly_name: '{{ name.capitalize().replace(''_'', '' '') }}'
+  sequence:
+  - service: notify.default
+    data:
+      title: Utilities
+      message: '{{ friendly_name }} has started {{ emojis }}'
+  - variables:
+      start_time: '{{ as_timestamp(now()) }}'
+      start_kwh: '{{ states(total_sensor) }}'
+  - wait_for_trigger:
+      platform: template
+      value_template: '{{ is_state(binary_sensor, ''off'') }}'
+    timeout: 08:00:00
+    continue_on_timeout: false
+  - variables:
+      end_time: '{{ as_timestamp(now()) }}'
+      end_kwh: '{{ states(total_sensor) }}'
+  - variables:
+      total_time: '{{ (end_time|float - start_time|float) }}'
+      total_kwh: '{{ end_kwh|float - start_kwh|float }}'
+  - variables:
+      minutes: '{{ (total_time|float / 60) | round(0) }}'
+      total_kwh_rounded: '{{ (total_kwh | float) | round(2) }}'
+      price: '{{ (0.271 * total_kwh | float) | round(2) }}'
+  - service: notify.default
+    data:
+      title: Utilities
+      message: '{{ friendly_name }} is done after {{ minutes }} minutes and it used
+        {{ total_kwh_rounded }} kWh (€{{ price }}) {{ emojis }}'
+  alias: Utility notification
+open_door:
+  alias: Open door
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.front_door
+  - delay: 0:00:10
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.front_door
+  mode: restart
+  icon: hass:door
+speedtest_notification:
+  alias: Speedtest notification
+  sequence:
+  - service: notify.default
+    data:
+      title: Speedtest
+      message: "Download {{ (states('sensor.speedtest_download') | float) | round(2)\
+        \ }} \nUpload {{ (states('sensor.speedtest_upload') | float) | round(2) }}"
+  mode: single
+  icon: mdi:speedometer
+gate_notification:
+  alias: Gate notification
+  sequence:
+  - service: notify.default
+    data:
+      message: Gate {{ states('cover.street_gate') }}
+  mode: single
+  icon: hass:gate
+doorbell:
+  alias: Doorbell
+  sequence:
+  - service: notify.default
+    data:
+      message: Doorbell intern
+  - service: rest_command.mplayer
+    data:
+      cmd: playbit
+      file: /doorbell_God save the Queen.mp3
+  - service: scene.create
+    data:
+      scene_id: notify_lights_snapshot
+      snapshot_entities:
+      - light.kitchen_wall
+      - light.bookshelf
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.kitchen_wall
+      - light.bookshelf
+    data:
+      effect: strobe
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: scene.turn_on
+    target:
+      entity_id: scene.notify_lights_snapshot
+  mode: single
+  icon: mdi:doorbell

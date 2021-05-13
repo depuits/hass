@@ -1,0 +1,14 @@
+home-assistant.log
+home-assistant_v2.db
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal
+*.db
+
+lib
+deps
+tts
+secrets.yaml
+known_devices.yaml
+.HA_VERSION
+.storage/
+image/

@@ -1,0 +1,6 @@
+apartment_people:
+  name: Apartment People
+  entities:
+    - person.elien
+    - person.joeri
+

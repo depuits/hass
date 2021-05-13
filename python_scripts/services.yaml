@@ -1,0 +1,5 @@
+thermostat_schedule:
+  description: Change thermostat to script schedule.
+  fields:
+  
+  

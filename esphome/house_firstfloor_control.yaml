@@ -1,0 +1,191 @@
+esphome:
+  name: house_firstfloor_control
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "House FirstFloor Control"
+    password: "jzDio0zQrD5Z"
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  topic_prefix: "house/firstfloor"
+  
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+#api:
+#  password: !secret device_password
+
+ota:
+  password: !secret device_password
+
+
+sensor:
+  - platform: uptime
+    name: "Uptime"
+    
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+   
+  #ATC_6345A6
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:63:45:A6
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Hallway Mobile Temperature"
+    humidity:
+      name: "Hallway Mobile Humidity"
+    battery_level:
+      name: "Hallway Mobile Battery Level"
+      
+  #ATC_B8A417
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:B8:A4:17
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Technical Mobile Temperature"
+    humidity:
+      name: "Technical Mobile Humidity"
+    battery_level:
+      name: "Technical Mobile Battery Level"
+    
+  #ATC_2F4235
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:2F:42:35
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Room 2 Mobile Temperature"
+    humidity:
+      name: "Room 2 Mobile Humidity"
+    battery_level:
+      name: "Room 2 Mobile Battery Level"
+      
+  #ATC_59AEB8
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:59:AE:B8
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Office Mobile Temperature"
+    humidity:
+      name: "Office Mobile Humidity"
+    battery_level:
+      name: "Office Mobile Battery Level"
+      
+  #ATC_82EEC3
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:82:EE:C3
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Room 4 Mobile Temperature"
+    humidity:
+      name: "Room 4 Mobile Humidity"
+    battery_level:
+      name: "Room 4 Mobile Battery Level"
+      
+  #ATC_13AD3A
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:13:AD:3A
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Badroom Mobile Temperature"
+    humidity:
+      name: "Badroom Mobile Humidity"
+    battery_level:
+      name: "Badroom Mobile Battery Level"
+      
+status_led:
+  pin:
+    number: GPIO2
+    inverted: False
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO22
+      mode: INPUT_PULLUP
+    name: "Bedroom button"
+    filters:
+      - delayed_on: 10ms
+    on_press:
+      then:
+        - light.toggle: bedroom_light
+  - platform: gpio
+    pin:
+      number: GPIO17
+      mode: INPUT_PULLUP
+    name: "Bedroom dressing button"
+    filters:
+      - delayed_on: 10ms
+    on_press:
+      then:
+        - light.toggle: bedroomDressing_light
+
+light:
+  - platform: binary
+    name: "Bedroom"
+    output: gpio_lightRoom
+    id: bedroom_light
+  - platform: binary
+    name: "Bedroom dressing"
+    output: gpio_lightDressing
+    id: bedroomDressing_light
+
+output:
+  - platform: gpio
+    pin: 
+      number: GPIO18
+      inverted: True
+    id: gpio_lightRoom
+  - platform: gpio
+    pin: 
+      number: GPIO26
+      inverted: True
+    id: gpio_lightDressing
+
+switch:
+  - platform: gpio
+    pin: 
+      number: GPIO23
+      inverted: True
+    name: "Bedroom cover power"
+    id: bedroom_cover_power
+  - platform: gpio
+    pin: 
+      number: GPIO19
+      inverted: True
+    name: "Bedroom cover direction"
+    id: bedroom_cover_direction
+
+cover:
+  - platform: time_based
+    name: "Bedroom"
+    has_built_in_endstop: true 
+
+    open_action:
+      - switch.turn_on: bedroom_cover_direction
+      - switch.turn_on: bedroom_cover_power
+    open_duration: 27s
+
+    close_action:
+      - switch.turn_off: bedroom_cover_direction
+      - switch.turn_on: bedroom_cover_power
+    close_duration: 27s
+
+    stop_action:
+      - switch.turn_off: bedroom_cover_power
+      - switch.turn_off: bedroom_cover_direction
+
+esp32_ble_tracker:

@@ -1,0 +1,49 @@
+- id: '1587622537571'
+  name: Movie
+  entities:
+    light.bookshelf:
+      brightness: 255
+      effect: none
+      effect_list:
+      - colorfade_slow
+      - colorfade_fast
+      - flash
+      friendly_name: Bookshelf
+      hs_color:
+      - 60
+      - 100
+      rgb_color:
+      - 255
+      - 255
+      - 0
+      state: 'on'
+      supported_features: 61
+      xy_color:
+      - 0.444
+      - 0.517
+    light.kitchen_wall:
+      effect_list:
+      - flash
+      friendly_name: Kitchen wall
+      state: 'off'
+      supported_features: 45
+    light.tv_backlight:
+      brightness: 255
+      effect: none
+      effect_list:
+      - colorfade_slow
+      - colorfade_fast
+      - flash
+      friendly_name: TV backlight
+      hs_color:
+      - 60
+      - 100
+      rgb_color:
+      - 255
+      - 255
+      - 0
+      state: 'on'
+      supported_features: 61
+      xy_color:
+      - 0.444
+      - 0.517
