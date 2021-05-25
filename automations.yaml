@@ -359,35 +359,9 @@
   description: ''
   trigger:
   - platform: mqtt
-    topic: app/kitchen/wall/button
+    topic: app/kitchen/wall/sensor/button/state
     payload: '2'
   condition: []
   action:
   - service: script.open_door
-  mode: single
-- id: '1619798005890'
-  alias: Babyphone on
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: input_boolean.babyphone
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - service: ffmpeg.start
-    data:
-      entity_id: binary_sensor.babycam_noise
-  mode: single
-- id: '1619798030009'
-  alias: Babyphone off
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: input_boolean.babyphone
-    from: 'on'
-    to: 'off'
-  condition: []
-  action:
-  - service: ffmpeg.stop
   mode: single

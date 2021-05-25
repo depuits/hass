@@ -1,10 +1,7 @@
 esphome:
   name: app_living_bookshelf
-  platform: ESP8266
-  board: esp01_1m
-  includes:
-    - lib/AButt/AButt.h
-    - lib/AButt/AButt_Sensor.h
+  platform: ESP32
+  board: wemos_d1_mini32
 
 wifi:
   ssid: !secret wifi_ssid
@@ -13,7 +10,7 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "App Living Bookshelf"
+    ssid: "App Living Bookshelf New"
     password: "jzDio0zQrD5Z"
 
 mqtt:
@@ -34,9 +31,17 @@ logger:
 ota:
   password: !secret device_password
 
+
 sensor:
+  - platform: uptime
+    name: "Uptime"
+    
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+    
   - platform: dht
-    pin: GPIO16
+    pin: GPIO26
     temperature:
       name: "Temperature"  
       filters:
@@ -47,17 +52,41 @@ sensor:
         - filter_out: nan
     update_interval: 30s
     model: DHT22
+
+  #ATC_06BFCB
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:06:BF:CB
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Living Mobile Temperature"
+    humidity:
+      name: "Living Mobile Humidity"
+    battery_level:
+      name: "Living Mobile Battery Level"
+      
+  #ATC_E5A904
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:E5:A9:04
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Kitchen Mobile Temperature"
+    humidity:
+      name: "Kitchen Mobile Humidity"
+    battery_level:
+      name: "Kitchen Mobile Battery Level"
+
+  #ATC_BB7E23
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:BB:7E:23
+    bindkey: "05e04076be48f427f3d90e166d0fbd5e"
+    temperature:
+      name: "Storage Mobile Temperature"
+    humidity:
+      name: "Storage Mobile Humidity"
+    battery_level:
+      name: "Storage Mobile Battery Level"
+  
     
-text_sensor:
-  - platform: custom
-    lambda: |-
-      auto sensor = new AButtSensor(0, true);
-      App.register_component(sensor);
-      return {sensor};
-
-    text_sensors:
-      name: "Button"
-
 light:
   - platform: rgb
     id: center
@@ -70,30 +99,22 @@ light:
       - strobe:
       - flicker:
       
-
 # Example output entry
 output:
-  - platform: esp8266_pwm
+  - platform: ledc
     id: out_l_r
-    pin: GPIO14
-  - platform: esp8266_pwm
+    pin: GPIO21
+  - platform: ledc
     id: out_l_g
-    pin: GPIO12
-  - platform: esp8266_pwm
+    pin: GPIO17
+  - platform: ledc
     id: out_l_b
-    pin: GPIO13
+    pin: GPIO16
 
 status_led:
   pin:
     number: GPIO2
-    inverted: True
+    inverted: False
+  
+esp32_ble_tracker:
 
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO0
-      inverted: True
-    name: "BinButton"
-    on_press:
-      - light.toggle: center
-      

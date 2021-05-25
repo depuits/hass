@@ -3,6 +3,9 @@ esphome:
   platform: ESP32
   board: wemos_d1_mini32
 
+external_components:
+  - source: github://depuits/esphome-SDM-enery-meter
+  
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
@@ -47,6 +50,7 @@ sensor:
 - platform: sdm
   dere_pin: 16
   baud_rate: 9600
+  channel: 1
   sdm_phase_1_voltage:
     name: "Voltage"
   sdm_phase_1_current:

@@ -100,17 +100,6 @@ binary_sensor:
     after: sunset
     before: '23:00'
     
-  - platform: ffmpeg_noise
-    name: Babycam noise
-    input: !secret babycam_url
-    extra_arguments: -filter:a highpass=f=300,lowpass=f=2500,volume=volume=2 -codec:a libmp3lame -ar 16000
-    #output: -f mp3 icecast://stream_user:stream_pw@127.0.0.1:8000/babyphone.mp3
-    initial_state: false
-    duration: 2
-    reset: 60
-    peak: -32
-    
-    
 cover:
   - platform: mqtt
     name: Street gate
@@ -217,9 +206,7 @@ input_boolean:
   notify_camera_movement:
     name: Notify when there is movement on a camera
     icon: mdi:cctv
-  babyphone:
-    name: Babyphone
-    initial: off
+
 
 camera:
   - platform: mjpeg

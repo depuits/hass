@@ -62,39 +62,65 @@ status_led:
     number: GPIO2
     inverted: True
 
-
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO0
-      inverted: True
+sensor:
+  - platform: AButt
     name: "Button"
-    on_multi_click:
-    - timing:
-        - ON for at most 1s
-        - OFF for at most 1s
-        - ON for at most 1s
-        - OFF for at least 0.2s
+    retain: False
+    inverted: True
+    pin: 0
+    on_value:
       then:
-        - logger.log: "Double Clicked"
-        - mqtt.publish:
-            topic: app/kitchen/wall/button
-            payload: 2
-    - timing:
-        - ON for 1s to 2s
-        - OFF for at least 0.5s
-      then:
-        - logger.log: "Single Long Clicked"
-        - mqtt.publish:
-            topic: app/kitchen/wall/button
-            payload: -1
-    - timing:
-        - ON for at most 1s
-        - OFF for at least 0.5s
-      then:
-        - logger.log: "Single Short Clicked"
-        - light.toggle: wall
-        - mqtt.publish:
-            topic: app/kitchen/wall/button
-            payload: 1
+        - if:
+            condition:
+              lambda: 'return x == 1;'
+            then:
+              - light.toggle: wall
+        - if:
+            condition:
+              lambda: 'return x == 2;'
+            then:
+              - light.toggle: wall
+              - delay: 1s
+              - light.toggle: wall
+              - delay: 1s
+              - light.toggle: wall
+              - delay: 1s
+              - light.toggle: wall
+
+#binary_sensor:
+#  - platform: gpio
+#    pin:
+#      number: GPIO0
+#      inverted: True
+#    name: "Button"
+#    on_multi_click:
+#    - timing:
+#        - ON for at most 1s
+#        - OFF for at most 1s
+#        - ON for at most 1s
+#The inverted binary_sensor property has been replaced by the "
+#            "new 'invert' binary  sensor filter. Please see "
+#            "https://esphome.io/components/binary_sensor/index.html."        - OFF for at least 0.2s
+#      then:
+#        - logger.log: "Double Clicked"
+#        - mqtt.publish:
+#            topic: app/kitchen/wall/button
+#            payload: 2
+#    - timing:
+#        - ON for 1s to 2s
+#        - OFF for at least 0.5s
+#      then:
+#        - logger.log: "Single Long Clicked"
+#        - mqtt.publish:
+#            topic: app/kitchen/wall/button
+#            payload: -1
+#    - timing:
+#        - ON for at most 1s
+#        - OFF for at least 0.5s
+#      then:
+#        - logger.log: "Single Short Clicked"
+#        - light.toggle: wall
+#        - mqtt.publish:
+#            topic: app/kitchen/wall/button
+#            payload: 1
       
