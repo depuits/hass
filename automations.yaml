@@ -374,11 +374,12 @@
   trigger:
   - platform: state
     entity_id: sensor.house_doorbell
+    to: '-1'
   condition: []
   action:
   - service: script.doorbell
     data:
       name: Doorbell frontdoor
       sound: /Doorbell-SoundBible.com-516741062.mp3
-      camera_id: camera.front_gate
+      camera: camera.front_gate
   mode: single

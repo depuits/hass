@@ -7,7 +7,7 @@ homeassistant:
   external_url: !secret url
   internal_url: !secret url
   allowlist_external_dirs:
-    - /tmp  
+    - '/config/tmp'
   
 frontend:
   themes: !include_dir_merge_named themes

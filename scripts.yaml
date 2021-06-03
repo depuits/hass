@@ -90,7 +90,7 @@ doorbell:
       required: true
       selector:
         text:
-    camera_id:
+    camera:
       description: Camera device id to send snapshot
       example: camera.front_gate
       required: false
@@ -102,20 +102,20 @@ doorbell:
   - choose:
     - conditions:
       - condition: template
-        value_template: camera_id != ''
+        value_template: '{{ ''{}''.format(camera) != '''' }}'
       sequence:
       - service: camera.snapshot
         data:
-          filename: /tmp/snapshot_{{camera_id}}_latest.jpg
+          filename: /config/tmp/snapshot.{{camera}}.latest.jpg
         target:
           entity_id:
-          - camera.front_gate
+          - '{{ camera }}'
       - service: notify.default
         data:
           message: '{{ name }}'
           data:
             photo:
-            - file: /tmp/snapshot_{{camera_id}}_latest.jpg
+            - file: /config/tmp/snapshot.{{camera}}.latest.jpg
               caption: '{{ name }}'
     default:
     - service: notify.default

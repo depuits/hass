@@ -12,5 +12,6 @@ known_devices.yaml
 .HA_VERSION
 .storage/
 image/
+tmp/
 
 custom_components/hacs
