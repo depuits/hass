@@ -354,14 +354,31 @@
       sonoff_button: 3fcc2039ed3b4e89b85ac95ee8e8ee0e
       toggle_action:
       - service: script.doorbell
+        data:
+          name: Doorbell intern
+          sound: /doorbell_God save the Queen.mp3
 - id: '1618581090054'
   alias: Kitchen button actions
   description: ''
   trigger:
-  - platform: mqtt
-    topic: app/kitchen/wall/sensor/button/state
-    payload: '2'
+  - platform: state
+    entity_id: sensor.kitchen_button
+    to: '2'
   condition: []
   action:
   - service: script.open_door
+  mode: single
+- id: '1622658384029'
+  alias: Frontdoor doorbell button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.house_doorbell
+  condition: []
+  action:
+  - service: script.doorbell
+    data:
+      name: Doorbell frontdoor
+      sound: /Doorbell-SoundBible.com-516741062.mp3
+      camera_id: camera.front_gate
   mode: single

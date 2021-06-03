@@ -5,6 +5,7 @@ esphome:
 
 external_components:
   - source: github://depuits/esphome-SDM-enery-meter
+  - source: github://depuits/esphome-AButt
   
 wifi:
   ssid: !secret wifi_ssid
@@ -52,10 +53,17 @@ sensor:
   baud_rate: 9600
   channel: 1
   sdm_phase_1_voltage:
-    name: "Voltage"
+    name: "Washer voltage"
   sdm_phase_1_current:
-    name: "Current"
+    name: "Washer current"
   sdm_phase_1_power:
-    name: "Power"
-  #sdm_import_active_energy:
-  #  name: "Energy import"
+    name: "Washer power"
+  sdm_total_active_energy:
+    name: "Washer total"
+
+- platform: AButt
+  name: "Doorbell"
+  retain: False
+  inverted: True
+  pin: 27
+

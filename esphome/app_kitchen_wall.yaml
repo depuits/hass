@@ -3,6 +3,9 @@ esphome:
   platform: ESP8266
   board: esp01_1m
 
+external_components:
+  - source: github://depuits/esphome-AButt
+  
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password

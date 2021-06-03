@@ -6,6 +6,8 @@ homeassistant:
   customize: !include customize.yaml
   external_url: !secret url
   internal_url: !secret url
+  allowlist_external_dirs:
+    - /tmp  
   
 frontend:
   themes: !include_dir_merge_named themes
@@ -14,7 +16,8 @@ http:
   use_x_forwarded_for: true
   trusted_proxies: 
     - !secret proxy_host
-    
+
+
 python_script:
 
 # Text to speech
@@ -59,6 +62,7 @@ scene: !include scenes.yaml
 
 light: !include lights.yaml
 sensor: !include sensors.yaml
+#sensor: !include_dir_merge_list sensor/
 
 binary_sensor:
   - platform: template

@@ -73,14 +73,58 @@ gate_notification:
   icon: hass:gate
 doorbell:
   alias: Doorbell
+  icon: mdi:doorbell
+  description: Doorbell action sequence
+  mode: parallel
+  max: 20
+  fields:
+    name:
+      description: Name for the notification
+      example: Doorbell intern
+      required: true
+      selector:
+        text:
+    sound:
+      description: Sound played on intern media player
+      example: /doorbell_God save the Queen.mp3
+      required: true
+      selector:
+        text:
+    camera_id:
+      description: Camera device id to send snapshot
+      example: camera.front_gate
+      required: false
+      default: ''
+      selector:
+        entity:
+          domain: camera
   sequence:
-  - service: notify.default
-    data:
-      message: Doorbell intern
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: camera_id != ''
+      sequence:
+      - service: camera.snapshot
+        data:
+          filename: /tmp/snapshot_{{camera_id}}_latest.jpg
+        target:
+          entity_id:
+          - camera.front_gate
+      - service: notify.default
+        data:
+          message: '{{ name }}'
+          data:
+            photo:
+            - file: /tmp/snapshot_{{camera_id}}_latest.jpg
+              caption: '{{ name }}'
+    default:
+    - service: notify.default
+      data:
+        message: '{{ name }}'
   - service: rest_command.mplayer
     data:
       cmd: playbit
-      file: /doorbell_God save the Queen.mp3
+      file: '{{ sound }}'
   - service: scene.create
     data:
       scene_id: notify_lights_snapshot
@@ -102,5 +146,3 @@ doorbell:
   - service: scene.turn_on
     target:
       entity_id: scene.notify_lights_snapshot
-  mode: single
-  icon: mdi:doorbell

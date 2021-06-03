@@ -484,74 +484,51 @@
 #  station_to: 'Gent-Sint-Pieters'
 #  station_live: 'Deinze'
 
-
 - platform: mqtt
   name: 'Kitchen button'
-  state_topic: 'home/kitchen/light/wall/button'
-  unique_id: 'home/kitchen/light/wall/button'
+  state_topic: 'app/kitchen/wall/sensor/button/state'
+  unique_id: 'app/kitchen/wall/sensor/button'
+  availability_topic: 'app/kitchen/wall/status'
   expire_after: 3
-
+  
 - platform: mqtt
-  name: 'Bookshelf button'
-  state_topic: 'home/living/bookshelf/button'
-  unique_id: 'home/living/bookshelf/button'
+  name: 'House doorbell'
+  state_topic: 'house/groundfloor/technical/sensor/doorbell/state'
+  unique_id: 'house/groundfloor/technical/sensor/doorbell'
+  availability_topic: 'house/groundfloor/technical/status'
   expire_after: 3
-
+  
 # washer power consumption
 - platform: mqtt
   name: 'Washing machine power'
-  state_topic: 'home/laundry/washer/tele/SENSOR'
-  unique_id: 'home/laundry/washer/tele/SENSOR/Power'
+  state_topic: 'house/groundfloor/technical/sensor/washer_power/state'
+  unique_id: 'house/groundfloor/technical/sensor/washer_power'
+  availability_topic: 'house/groundfloor/technical/status'
   unit_of_measurement: 'W'
-  value_template: '{{ value_json.ENERGY.Power }}'
   device_class: power
-  availability_topic: 'home/laundry/washer/tele/LWT'
-  payload_available: Online
-  payload_not_available: Offline
-  
 - platform: mqtt
   name: 'Washing machine current'
-  state_topic: 'home/laundry/washer/tele/SENSOR'
-  unique_id: 'home/laundry/washer/tele/SENSOR/Current'
+  state_topic: 'house/groundfloor/technical/sensor/washer_current/state'
+  unique_id: 'house/groundfloor/technical/sensor/washer_current'
+  availability_topic: 'house/groundfloor/technical/status'
   unit_of_measurement: 'A'
-  value_template: '{{ value_json.ENERGY.Current }}'
   device_class: power
 - platform: mqtt
   name: 'Washing machine voltage'
-  state_topic: 'home/laundry/washer/tele/SENSOR'
-  unique_id: 'home/laundry/washer/tele/SENSOR/Voltage'
+  state_topic: 'house/groundfloor/technical/sensor/washer_voltage/state'
+  unique_id: 'house/groundfloor/technical/sensor/washer_voltage'
+  availability_topic: 'house/groundfloor/technical/status'
   unit_of_measurement: 'V'
-  value_template: '{{ value_json.ENERGY.Voltage }}'
   device_class: power
-  
-- platform: mqtt
-  name: 'Washing machine total start'
-  state_topic: 'home/laundry/washer/tele/SENSOR'
-  unique_id: 'home/laundry/washer/tele/SENSOR/TotalStart'
-  value_template: '{{ value_json.ENERGY.TotalStartTime }}'
-  device_class: timestamp
 - platform: mqtt
   name: 'Washing machine total'
-  state_topic: 'home/laundry/washer/tele/SENSOR'
-  unique_id: 'home/laundry/washer/tele/SENSOR/Total'
+  state_topic: 'house/groundfloor/technical/sensor/washer_total/state'
+  unique_id: 'house/groundfloor/technical/sensor/washer_total'
+  availability_topic: 'house/groundfloor/technical/status'
   unit_of_measurement: 'kWh'
-  value_template: '{{ value_json.ENERGY.Total }}'
   device_class: power
-- platform: mqtt
-  name: 'Washing machine yesterday'
-  state_topic: 'home/laundry/washer/tele/SENSOR'
-  unique_id: 'home/laundry/washer/tele/SENSOR/Yesterday'
-  unit_of_measurement: 'kWh'
-  value_template: '{{ value_json.ENERGY.Yesterday }}'
-  device_class: power
-- platform: mqtt
-  name: 'Washing machine today'
-  state_topic: 'home/laundry/washer/tele/SENSOR'
-  unique_id: 'home/laundry/washer/tele/SENSOR/Today'
-  unit_of_measurement: 'kWh'
-  value_template: '{{ value_json.ENERGY.Today }}'
-  device_class: power
-
+  
+  
 - platform: mqtt
   name: 'cctv motion detection'
   state_topic: 'cctv/detect'
