@@ -1,0 +1,165 @@
+# house first floor metrics
+- platform: mqtt
+  name: 'First floor control wifi signal'
+  unique_id: 'house/firstfloor/sensor/wifi_signal'
+  state_topic: 'house/firstfloor/sensor/wifi_signal/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: signal_strength
+  unit_of_measurement: 'dB'
+  
+- platform: mqtt
+  name: 'First floor control uptime'
+  unique_id: 'house/firstfloor/sensor/uptime'
+  state_topic: 'house/firstfloor/sensor/uptime/state'
+  availability_topic: 'house/firstfloor/status'
+  unit_of_measurement: 's'
+  
+  # climate hallway mobile
+- platform: mqtt
+  name: 'Hallway mobile temperature'
+  unique_id: 'house/firstfloor/sensor/hallway_mobile_temperature'
+  state_topic: 'house/firstfloor/sensor/hallway_mobile_temperature/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: temperature
+  unit_of_measurement: '°C'
+
+- platform: mqtt
+  name: 'Hallway mobile humidity'
+  unique_id: 'house/firstfloor/sensor/hallway_mobile_humidity'
+  state_topic: 'house/firstfloor/sensor/hallway_mobile_humidity/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: humidity
+  unit_of_measurement: '%'
+  
+- platform: mqtt
+  name: 'Hallway mobile battery level'
+  unique_id: 'house/firstfloor/sensor/hallway_mobile_battery_level'
+  state_topic: 'house/firstfloor/sensor/hallway_mobile_battery_level/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: battery
+  unit_of_measurement: '%'
+  
+  # climate technical mobile
+- platform: mqtt
+  name: 'Technical mobile temperature'
+  unique_id: 'house/firstfloor/sensor/technical_mobile_temperature'
+  state_topic: 'house/firstfloor/sensor/technical_mobile_temperature/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: temperature
+  unit_of_measurement: '°C'
+
+- platform: mqtt
+  name: 'Technical mobile humidity'
+  unique_id: 'house/firstfloor/sensor/technical_mobile_humidity'
+  state_topic: 'house/firstfloor/sensor/technical_mobile_humidity/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: humidity
+  unit_of_measurement: '%'
+  
+- platform: mqtt
+  name: 'Technical mobile battery level'
+  unique_id: 'house/firstfloor/sensor/technical_mobile_battery_level'
+  state_topic: 'house/firstfloor/sensor/technical_mobile_battery_level/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: battery
+  unit_of_measurement: '%'
+  
+  # climate room 2 mobile
+- platform: mqtt
+  name: 'Room 2 mobile temperature'
+  unique_id: 'house/firstfloor/sensor/room_2_mobile_temperature'
+  state_topic: 'house/firstfloor/sensor/room_2_mobile_temperature/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: temperature
+  unit_of_measurement: '°C'
+
+- platform: mqtt
+  name: 'Room 2 mobile humidity'
+  unique_id: 'house/firstfloor/sensor/room_2_mobile_humidity'
+  state_topic: 'house/firstfloor/sensor/room_2_mobile_humidity/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: humidity
+  unit_of_measurement: '%'
+  
+- platform: mqtt
+  name: 'Room 2 mobile battery level'
+  unique_id: 'house/firstfloor/sensor/room_2_mobile_battery_level'
+  state_topic: 'house/firstfloor/sensor/room_2_mobile_battery_level/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: battery
+  unit_of_measurement: '%'
+  
+  # climate office mobile
+- platform: mqtt
+  name: 'Office mobile temperature'
+  unique_id: 'house/firstfloor/sensor/office_mobile_temperature'
+  state_topic: 'house/firstfloor/sensor/office_mobile_temperature/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: temperature
+  unit_of_measurement: '°C'
+
+- platform: mqtt
+  name: 'Office mobile humidity'
+  unique_id: 'house/firstfloor/sensor/office_mobile_humidity'
+  state_topic: 'house/firstfloor/sensor/office_mobile_humidity/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: humidity
+  unit_of_measurement: '%'
+  
+- platform: mqtt
+  name: 'Office mobile battery level'
+  unique_id: 'house/firstfloor/sensor/office_mobile_battery_level'
+  state_topic: 'house/firstfloor/sensor/office_mobile_battery_level/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: battery
+  unit_of_measurement: '%'
+  
+  # climate room_4 mobile
+- platform: mqtt
+  name: 'Room 4 mobile temperature'
+  unique_id: 'house/firstfloor/sensor/room_4_mobile_temperature'
+  state_topic: 'house/firstfloor/sensor/room_4_mobile_temperature/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: temperature
+  unit_of_measurement: '°C'
+
+- platform: mqtt
+  name: 'Room 4 mobile humidity'
+  unique_id: 'house/firstfloor/sensor/room_4_mobile_humidity'
+  state_topic: 'house/firstfloor/sensor/room_4_mobile_humidity/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: humidity
+  unit_of_measurement: '%'
+  
+- platform: mqtt
+  name: 'Room 4 mobile battery level'
+  unique_id: 'house/firstfloor/sensor/room_4_mobile_battery_level'
+  state_topic: 'house/firstfloor/sensor/room_4_mobile_battery_level/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: battery
+  unit_of_measurement: '%'
+  
+  # climate badroom firstfloor mobile
+- platform: mqtt
+  name: 'Badroom firstfloor mobile temperature'
+  unique_id: 'house/firstfloor/sensor/badroom_mobile_temperature'
+  state_topic: 'house/firstfloor/sensor/badroom_mobile_temperature/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: temperature
+  unit_of_measurement: '°C'
+
+- platform: mqtt
+  name: 'Badroom firstfloor mobile humidity'
+  unique_id: 'house/firstfloor/sensor/badroom_mobile_humidity'
+  state_topic: 'house/firstfloor/sensor/badroom_mobile_humidity/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: humidity
+  unit_of_measurement: '%'
+  
+- platform: mqtt
+  name: 'Badroom firstfloor mobile battery level'
+  unique_id: 'house/firstfloor/sensor/badroom_mobile_battery_level'
+  state_topic: 'house/firstfloor/sensor/badroom_mobile_battery_level/state'
+  availability_topic: 'house/firstfloor/status'
+  device_class: battery
+  unit_of_measurement: '%'

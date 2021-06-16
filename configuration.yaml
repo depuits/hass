@@ -45,7 +45,7 @@ influxdb:
   password: hass
   max_retries: 3
   default_measurement: state
-  exclude: !include recorder_exlcude.yaml
+  exclude: !include recorder_exclude.yaml
 
 binary_sensor:
   - platform: template
