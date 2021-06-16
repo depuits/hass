@@ -16,7 +16,17 @@ http:
   use_x_forwarded_for: true
   trusted_proxies: 
     - !secret proxy_host
+    
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+camera: !include cameras.yaml
 
+light: !include_dir_merge_list  lights
+sensor: !include_dir_merge_list sensors
+switch: !include_dir_merge_list switches
+cover: !include_dir_merge_list covers
 
 python_script:
 
@@ -25,16 +35,7 @@ tts:
   - platform: google_translate
 
 recorder:
-  exclude:
-    domains:
-      - automation
-      - updater
-      - pi_hole
-    entities:
-      - sensor.nmbs
-      - sensor.nmbs_live_deinze
-      - sensor.washer_total_start
-      - sensor.washer_yesterday
+  exclude: !include recorder_exclude.yaml
 
 influxdb:
   host: localhost
@@ -44,25 +45,7 @@ influxdb:
   password: hass
   max_retries: 3
   default_measurement: state
-  exclude:
-    domains:
-      - automation
-      - updater
-    entities:
-      - sensor.nmbs
-      - sensor.nmbs_live_deinze
-      - sensor.washer_total_start
-      - sensor.washer_yesterday
-
-    
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
-scene: !include scenes.yaml
-
-light: !include lights.yaml
-sensor: !include sensors.yaml
-#sensor: !include_dir_merge_list sensor/
+  exclude: !include recorder_exlcude.yaml
 
 binary_sensor:
   - platform: template
@@ -103,49 +86,13 @@ binary_sensor:
     name: Evening mood lights
     after: sunset
     before: '23:00'
-    
-cover:
-  - platform: mqtt
-    name: Street gate
-    unique_id: 'home/entry/gate/front'
-    state_topic: 'home/entry/gate/front'
-    command_topic: 'home/entry/gate/front/set'
-    device_class: gate
-    payload_open: open
-    state_open: open
-    payload_close: close
-    state_closed: close
-    
-  - platform: mqtt
-    name: Bedroom Ruben cover
-    unique_id: 'house/firstfloor/cover/bedroom'
-    command_topic: 'house/firstfloor/cover/bedroom/command'
-    set_position_topic: 'house/firstfloor/cover/bedroom/position/command'
-    position_topic: 'house/firstfloor/cover/bedroom/position/state'
-    availability_topic: 'house/firstfloor/status'
-    device_class: blind
-  
-switch:
-  - platform: mqtt
-    name: Thermostat switch
-    state_topic: 'app/living/tv/switch/thermostat'
-    command_topic: 'app/living/tv/switch/thermostat/set'
-    unique_id: 'app/living/tv/switch/thermostat'
-    
-  - platform: mqtt
-    name: Front door
-    state_topic: 'app/hall/front/door'
-    command_topic: 'app/hall/front/door/set'
-    unique_id: 'app/hall/frontdoor'
 
   - platform: mqtt
-    name: Living Room TV
-    command_topic: 'app/living/tv/cec/0/cmd'
-    payload_on: 'on'
-    payload_off: 'off'
-    state_topic: 'app/living/tv/cec/0'
-    availability_topic: 'app/living/tv/bridge/status'
-    unique_id: 'app/living/tv/cec'
+    name: 'House doorbell'
+    state_topic: 'house/groundfloor/technical/binary_sensor/doorbell/state'
+    unique_id: 'house/groundfloor/technical/binary_sensor/doorbell'
+    availability_topic: 'house/groundfloor/technical/status'
+    
 
 media_player:
   - platform: kodi
@@ -210,27 +157,7 @@ input_boolean:
   notify_camera_movement:
     name: Notify when there is movement on a camera
     icon: mdi:cctv
+    
+shell_command:
+  turn_off_colman_pc: "ssh 10.163.205.12 touch haTest"
 
-
-camera:
-  - platform: mjpeg
-    name: Front gate
-    mjpeg_url: http://10.163.205.76:8081
-    still_image_url: http://10.163.205.76/picture/1/current/?_username=admin&_signature=e3f5066aeb0936998e814d130aa77cdf70667f5d
-    authentication: basic
-    username: !secret cctv_username
-    password: !secret cctv_password
-  - platform: mjpeg
-    name: Front door apartment
-    mjpeg_url: http://10.163.205.76:8082
-    still_image_url: http://10.163.205.76/picture/2/current/?_username=admin&_signature=d81982a468a76bee5a58282bade0efd3e3f736b5
-    authentication: basic
-    username: !secret cctv_username
-    password: !secret cctv_password
-  - platform: mjpeg
-    name: Backyard
-    mjpeg_url: http://10.163.205.76:8083
-    still_image_url: http://10.163.205.76/picture/3/current/?_username=admin&_signature=9965e229dce9c814625dcca79b7d5c52198f8cae
-    authentication: basic
-    username: !secret cctv_username
-    password: !secret cctv_password

@@ -1,0 +1,24 @@
+- platform: mqtt
+  name: 'Dynamic 01'
+  unique_id: 'app/dynamic01'
+  state_topic: 'app/dynamic01/stat/POWER'
+  command_topic: 'app/dynamic01/cmnd/POWER'
+  payload_on: 'ON'
+  payload_off: 'OFF'
+  availability_topic: 'app/dynamic01/tele/LWT'
+  payload_available: 'Online'
+  payload_not_available: 'Offline'
+  optimistic: false
+  
+- platform: mqtt
+  name: 'Dynamic 02'
+  unique_id: 'app/dynamic02'
+  state_topic: 'app/dynamic02/stat/POWER'
+  command_topic: 'app/dynamic02/cmnd/POWER'
+  payload_on: 'ON'
+  payload_off: 'OFF'
+  availability_topic: 'app/dynamic02/tele/LWT'
+  payload_available: 'Online'
+  payload_not_available: 'Offline'
+  optimistic: false
+  

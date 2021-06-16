@@ -1,0 +1,9 @@
+domains:
+  - automation
+  - updater
+  - pi_hole
+entities:
+  - sensor.nmbs
+  - sensor.nmbs_live_deinze
+  - sensor.washer_total_start
+  - sensor.washer_yesterday

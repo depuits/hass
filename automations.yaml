@@ -155,7 +155,6 @@
   action:
   - service: light.turn_on
     data: {}
-    entity_id: light.front_door_mood, light.christmas_tree
   mode: single
 - id: '1605450820093'
   alias: Mood light auto turn off
@@ -171,7 +170,6 @@
   action:
   - service: light.turn_off
     data: {}
-    entity_id: light.front_door_mood, light.christmas_tree
   mode: single
 - id: '1605456961338'
   alias: Make sure the door lock is closed
@@ -369,12 +367,12 @@
   - service: script.open_door
   mode: single
 - id: '1622658384029'
-  alias: Frontdoor doorbell button
+  alias: Frontdoor doorbell
   description: ''
   trigger:
   - platform: state
-    entity_id: sensor.house_doorbell
-    to: '-1'
+    entity_id: binary_sensor.house_doorbell
+    to: 'on'
   condition: []
   action:
   - service: script.doorbell

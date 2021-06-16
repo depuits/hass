@@ -1,45 +1,13 @@
-esphome:
-  name: app_bedroom_control
-  platform: ESP32
-  board: wemos_d1_mini32
+substitutions:
+  devicename: app_bedroom_control
+  topic: 'app/bedroom/control'
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
+packages:
+  device_base: !include common/esp32.yaml
 
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "App Bedroom Control"
-    password: "jzDio0zQrD5Z"
-
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  topic_prefix: "app/bedroom/control"
-  
-captive_portal:
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-#api:
-#  password: !secret device_password
-
-ota:
-  password: !secret device_password
-
+esp32_ble_tracker:
 
 sensor:
-  - platform: uptime
-    name: "Uptime"
-    
-  - platform: wifi_signal
-    name: "WiFi Signal"
-    update_interval: 60s
-    
   #ATC_D82F9C
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:D8:2F:9C
@@ -94,11 +62,3 @@ sensor:
       name: "Hall Mobile Humidity"
     battery_level:
       name: "Hall Mobile Battery Level"
-   
-status_led:
-  pin:
-    number: GPIO2
-    inverted: False
-  
-esp32_ble_tracker:
-

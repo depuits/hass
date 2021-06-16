@@ -7,11 +7,13 @@ home-assistant_v2.db-wal
 lib
 deps
 tts
-secrets.yaml
+/secrets.yaml
 known_devices.yaml
 .HA_VERSION
 .storage/
 image/
 tmp/
+
+.ssh/
 
 custom_components/hacs

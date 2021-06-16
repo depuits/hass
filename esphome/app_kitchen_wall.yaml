@@ -1,48 +1,12 @@
-esphome:
-  name: app_kitchen_wall
-  platform: ESP8266
-  board: esp01_1m
+substitutions:
+  devicename: app_kitchen_wall
+  topic: 'app/kitchen/wall'
+
+packages:
+  device_base: !include common/esp8266.yaml
 
 external_components:
   - source: github://depuits/esphome-AButt
-  
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "App Kitchen Wall"
-    password: "jzDio0zQrD5Z"
-
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  topic_prefix: "app/kitchen/wall"
-
-captive_portal:
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-#api:
-#  password: !secret device_password
-
-ota:
-  password: !secret device_password
-
-#sensor:
-#  - platform: dht
-#    pin: GPIO16
-#    temperature:
-#      name: "Living Room Bookshelf Temperature"
-#    humidity:
-#      name: "Living Room Bookshelf Humidity"
-#    update_interval: 30s
-#    model: DHT22
 
 light:
   - platform: monochromatic
@@ -52,7 +16,6 @@ light:
     effects:
       - strobe:
       - flicker:
-      
 
 # Example output entry
 output:
@@ -60,15 +23,10 @@ output:
     id: out_l
     pin: GPIO14
 
-status_led:
-  pin:
-    number: GPIO2
-    inverted: True
-
 sensor:
   - platform: AButt
     name: "Button"
-    retain: False
+    #retain: False
     inverted: True
     pin: 0
     on_value:
@@ -89,6 +47,15 @@ sensor:
               - light.toggle: wall
               - delay: 1s
               - light.toggle: wall
+
+#  - platform: dht
+#    pin: GPIO16
+#    temperature:
+#      name: "Living Room Bookshelf Temperature"
+#    humidity:
+#      name: "Living Room Bookshelf Humidity"
+#    update_interval: 30s
+#    model: DHT22
 
 #binary_sensor:
 #  - platform: gpio

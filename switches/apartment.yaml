@@ -1,0 +1,20 @@
+- platform: mqtt
+  name: Thermostat switch
+  state_topic: 'app/living/tv/switch/thermostat'
+  command_topic: 'app/living/tv/switch/thermostat/set'
+  unique_id: 'app/living/tv/switch/thermostat'
+  
+- platform: mqtt
+  name: Front door
+  state_topic: 'app/hall/front/door'
+  command_topic: 'app/hall/front/door/set'
+  unique_id: 'app/hall/frontdoor'
+
+- platform: mqtt
+  name: Living Room TV
+  command_topic: 'app/living/tv/cec/0/cmd'
+  payload_on: 'on'
+  payload_off: 'off'
+  state_topic: 'app/living/tv/cec/0'
+  availability_topic: 'app/living/tv/bridge/status'
+  unique_id: 'app/living/tv/cec'

@@ -491,12 +491,29 @@
   availability_topic: 'app/kitchen/wall/status'
   expire_after: 3
   
+#- platform: mqtt
+#  name: 'House doorbell'
+#  state_topic: 'house/groundfloor/technical/sensor/doorbell/state'
+#  unique_id: 'house/groundfloor/technical/sensor/doorbell'
+#  availability_topic: 'house/groundfloor/technical/status'
+#  expire_after: 3
+  
+  
+# ground floor control center
 - platform: mqtt
-  name: 'House doorbell'
-  state_topic: 'house/groundfloor/technical/sensor/doorbell/state'
-  unique_id: 'house/groundfloor/technical/sensor/doorbell'
+  name: 'Ground floor technical wifi signal'
+  unique_id: 'house/groundfloor/technical/sensor/wifi_signal'
+  state_topic: 'house/groundfloor/technical/sensor/wifi_signal/state'
   availability_topic: 'house/groundfloor/technical/status'
-  expire_after: 3
+  device_class: signal_strength
+  unit_of_measurement: 'dB'
+  
+- platform: mqtt
+  name: 'Ground floor technical uptime'
+  unique_id: 'house/groundfloor/technical/sensor/uptime'
+  state_topic: 'house/groundfloor/technical/sensor/uptime/state'
+  availability_topic: 'house/groundfloor/technical/status'
+  unit_of_measurement: 's'
   
 # washer power consumption
 - platform: mqtt

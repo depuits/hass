@@ -1,45 +1,17 @@
-esphome:
-  name: house_groundfloor_technical
-  platform: ESP32
-  board: wemos_d1_mini32
+substitutions:
+  devicename: house_groundfloor_technical
+  topic: 'house/groundfloor/technical'
+
+packages:
+  device_base: !include common/esp32.yaml
 
 external_components:
   - source: github://depuits/esphome-SDM-enery-meter
   - source: github://depuits/esphome-AButt
-  
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "House groundfloor technical"
-    password: "jzDio0zQrD5Z"
-
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  topic_prefix: "house/groundfloor/technical"
-  
-captive_portal:
 
 # Disable logging
 logger:
   baud_rate: 0
-
-# Enable Home Assistant API
-#api:
-#  password: !secret device_password
-
-ota:
-  password: !secret device_password
-
-status_led:
-  pin:
-    number: GPIO2
-    inverted: False
 
 uart:
   tx_pin: TX
@@ -48,22 +20,32 @@ uart:
   stop_bits: 1
 
 sensor:
-- platform: sdm
-  dere_pin: 16
-  baud_rate: 9600
-  channel: 1
-  sdm_phase_1_voltage:
-    name: "Washer voltage"
-  sdm_phase_1_current:
-    name: "Washer current"
-  sdm_phase_1_power:
-    name: "Washer power"
-  sdm_total_active_energy:
-    name: "Washer total"
+  - platform: sdm
+    dere_pin: 16
+    baud_rate: 9600
+    channel: 1
+    sdm_phase_1_voltage:
+      name: "Washer voltage"
+    sdm_phase_1_current:
+      name: "Washer current"
+    sdm_phase_1_power:
+      name: "Washer power"
+    sdm_total_active_energy:
+      name: "Washer total"
 
-- platform: AButt
-  name: "Doorbell"
-  retain: False
-  inverted: True
-  pin: 27
+#  - platform: AButt
+#    name: "Doorbell"
+#    retain: False
+#    inverted: True
+#    pin: 27
 
+binary_sensor:
+  - platform: gpio
+    name: "Doorbell"
+    #retain: False
+    pin:
+      number: GPIO27
+      inverted: True
+      mode: INPUT_PULLUP
+    filters:
+      - delayed_on: 10ms
