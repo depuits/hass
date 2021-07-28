@@ -5,9 +5,10 @@ substitutions:
 packages:
   device_base: !include common/esp32.yaml
 
+<<: !include common/mqtt.yaml
+
 external_components:
   - source: github://depuits/esphome-SDM-enery-meter
-  - source: github://depuits/esphome-AButt
 
 # Disable logging
 logger:
@@ -42,7 +43,7 @@ sensor:
 binary_sensor:
   - platform: gpio
     name: "Doorbell"
-    #retain: False
+    retain: False
     pin:
       number: GPIO27
       inverted: True

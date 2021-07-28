@@ -11,18 +11,18 @@
   optimistic: false
   qos: 0
   
-- platform: mqtt
-  schema: json
-  name: 'TV backlight'
-  unique_id: 'app/living/tv/light/back'
-  state_topic: 'app/living/tv/light/back'
-  command_topic: 'app/living/tv/light/back/set'
-  brightness: true
-  rgb: true
-  effect: true
-  effect_list: [colorfade_slow, colorfade_fast, flash]
-  optimistic: false
-  qos: 0
+#- platform: mqtt
+#  schema: json
+#  name: 'TV backlight'
+#  unique_id: 'app/living/tv/light/back'
+#  state_topic: 'app/living/tv/light/back'
+#  command_topic: 'app/living/tv/light/back/set'
+#  brightness: true
+#  rgb: true
+#  effect: true
+#  effect_list: [colorfade_slow, colorfade_fast, flash]
+#  optimistic: false
+#  qos: 0
 
 - platform: mqtt
   schema: json

@@ -83,7 +83,7 @@
   - service: mqtt.publish
     data:
       topic: app/living/tv/cec/tx
-      payload: 4f:82:10:00
+      payload: 4f:82:20:00
   mode: single
 - alias: 'Utilities: washing machine notification'
   trigger:

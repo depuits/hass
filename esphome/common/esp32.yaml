@@ -2,5 +2,10 @@ esphome:
   name: $devicename
   platform: ESP32
   board: wemos_d1_mini32
-
+   
+status_led:
+  pin:
+    number: GPIO2
+    inverted: False
+    
 <<: !include base.yaml

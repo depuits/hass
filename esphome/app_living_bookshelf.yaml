@@ -1,9 +1,11 @@
 substitutions:
   devicename: app_living_bookshelf
   topic: 'app/living/bookshelf'
-
+  
 packages:
   device_base: !include common/esp32.yaml
+
+<<: !include common/mqtt.yaml
 
 esp32_ble_tracker:
 

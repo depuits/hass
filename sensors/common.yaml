@@ -1,4 +1,19 @@
 - platform: mqtt
+  name: 'Kitchen wifi signal'
+  unique_id: 'app/kitchen/wall/sensor/wifi_signal'
+  state_topic: 'app/kitchen/wall/sensor/wifi_signal/state'
+  availability_topic: 'app/kitchen/wall/status'
+  device_class: signal_strength
+  unit_of_measurement: 'dB'
+  
+- platform: mqtt
+  name: 'Kitchen uptime'
+  unique_id: 'app/kitchen/wall/sensor/uptime'
+  state_topic: 'app/kitchen/wall/sensor/uptime/state'
+  availability_topic: 'app/kitchen/wall/status'
+  unit_of_measurement: 's'
+  
+- platform: mqtt
   name: 'Kitchen button'
   state_topic: 'app/kitchen/wall/sensor/button/state'
   unique_id: 'app/kitchen/wall/sensor/button'

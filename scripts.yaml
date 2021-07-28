@@ -131,6 +131,7 @@ doorbell:
       snapshot_entities:
       - light.kitchen_wall
       - light.bookshelf
+      - light.tv_backlight
   - service: light.turn_on
     target:
       entity_id:
@@ -138,6 +139,12 @@ doorbell:
       - light.bookshelf
     data:
       effect: strobe
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.tv_backlight
+    data:
+      effect: Police Lights Solid
   - delay:
       hours: 0
       minutes: 0
