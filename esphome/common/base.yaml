@@ -16,8 +16,8 @@ logger:
 #web_server:
 #  port: 80
 
-#api:
-#  password: !secret device_password
+api:
+  password: !secret device_password
 
 ota:
   password: !secret device_password

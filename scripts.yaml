@@ -129,14 +129,14 @@ doorbell:
     data:
       scene_id: notify_lights_snapshot
       snapshot_entities:
-      - light.kitchen_wall
-      - light.bookshelf
+      - light.kitchen_02_wall
+      - light.livingroom_02_bookshelf
       - light.tv_backlight
   - service: light.turn_on
     target:
       entity_id:
-      - light.kitchen_wall
-      - light.bookshelf
+      - light.kitchen_02_wall
+      - light.livingroom_02_bookshelf
     data:
       effect: strobe
   - service: light.turn_on
@@ -153,3 +153,21 @@ doorbell:
   - service: scene.turn_on
     target:
       entity_id: scene.notify_lights_snapshot
+update_kodi_cyril_library:
+  alias: Update Kodi Cyril Library
+  sequence:
+  - service: kodi.call_method
+    target:
+      device_id: 89841bc9f97f11eab169af289af6a9f0
+    data:
+      method: VideoLibrary.Scan
+  mode: single
+show_camera_on_cyril_kodi:
+  sequence:
+  - service: camera.play_stream
+    data:
+      media_player: media_player.cyril
+    target:
+      device_id: 199d9130f72af8f2b8f9e2eb7121bbb4
+  mode: single
+  alias: Show camera on Cyril kodi

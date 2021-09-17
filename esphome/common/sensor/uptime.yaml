@@ -1,2 +1,2 @@
 platform: uptime
-name: "Uptime"
+name: '${displayname} esph uptime'

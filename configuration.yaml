@@ -21,7 +21,7 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-camera: !include cameras.yaml
+#camera: !include cameras.yaml
 
 light: !include_dir_merge_list  lights
 sensor: !include_dir_merge_list sensors
@@ -124,18 +124,12 @@ notify:
       - service: telegram
       - service: cyril
 #      - service: notify
-    
-panel_iframe:
-  tasmoadmin:
-    title: TasmoAdmin
-    icon: mdi:lightbulb-on
-    url: http://hass:9541
-    
+
 climate:
   - platform: generic_thermostat
     name: Central Heating
     heater: switch.thermostat_switch
-    target_sensor: sensor.apartment_temperature #sensor.tv_temperature
+    target_sensor: sensor.apartment_temperature
     min_temp: 15
     max_temp: 28
     cold_tolerance: 0.5
@@ -152,12 +146,3 @@ rest_command:
     method: POST
     payload: '{"cmd": "{{ cmd }}", "file": "{{ file }}", "value": "{{ value }}"}'
     content_type:  'application/json; charset=utf-8'
-
-input_boolean:
-  notify_camera_movement:
-    name: Notify when there is movement on a camera
-    icon: mdi:cctv
-    
-shell_command:
-  turn_off_colman_pc: "ssh 10.163.205.12 touch haTest"
-

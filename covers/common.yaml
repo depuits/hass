@@ -3,6 +3,7 @@
   unique_id: 'home/entry/gate/front'
   state_topic: 'home/entry/gate/front'
   command_topic: 'home/entry/gate/front/set'
+  availability_topic: 'home/entry/gate/front/status'
   device_class: gate
   payload_open: open
   state_open: open

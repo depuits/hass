@@ -1,11 +1,9 @@
 substitutions:
-  devicename: app_living_bookshelf
-  topic: 'app/living/bookshelf'
+  devicename: livingroom-02-bookshelf
+  displayname: 'Livingroom 02 bookshelf'
   
 packages:
   device_base: !include common/esp32.yaml
-
-<<: !include common/mqtt.yaml
 
 esp32_ble_tracker:
 
@@ -13,11 +11,11 @@ sensor:
   - platform: dht
     pin: GPIO26
     temperature:
-      name: "Temperature"  
+      name: "${displayname} temperature"  
       filters:
         - filter_out: nan
     humidity:
-      name: "Humidity"
+      name: "${displayname} humidity"
       filters:
         - filter_out: nan
     update_interval: 30s
@@ -28,38 +26,38 @@ sensor:
     mac_address: A4:C1:38:06:BF:CB
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Living Mobile Temperature"
+      name: "Livingroom 02 mobile temperature"
+      id: "livingroom_02_mobile_temperature"
     humidity:
-      name: "Living Mobile Humidity"
+      name: "Livingroom 02 mobile humidity"
     battery_level:
-      name: "Living Mobile Battery Level"
+      name: "Livingroom 02 mobile battery level"
       
   #ATC_E5A904
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:E5:A9:04
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Kitchen Mobile Temperature"
+      name: "Kitchen 02 mobile temperature"
     humidity:
-      name: "Kitchen Mobile Humidity"
+      name: "Kitchen 02 mobile humidity"
     battery_level:
-      name: "Kitchen Mobile Battery Level"
+      name: "Kitchen 02 mobile battery level"
 
   #ATC_BB7E23
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:BB:7E:23
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Storage Mobile Temperature"
+      name: "Storage mobile temperature"
     humidity:
-      name: "Storage Mobile Humidity"
+      name: "Storage mobile humidity"
     battery_level:
-      name: "Storage Mobile Battery Level"
+      name: "Storage mobile battery level"
 
 light:
   - platform: rgb
-    id: center
-    name: "Center"
+    name: "${displayname}"
     red: out_l_r
     green: out_l_g
     blue: out_l_b
@@ -68,7 +66,6 @@ light:
       - strobe:
       - flicker:
 
-# Example output entry
 output:
   - platform: ledc
     id: out_l_r
@@ -79,3 +76,13 @@ output:
   - platform: ledc
     id: out_l_b
     pin: GPIO16
+
+remote_transmitter:
+  pin: GPIO22
+  carrier_duty_percent: 50%
+
+climate:
+  - platform: fujitsu_general
+    name: "Livingroom 02 AC"
+    sensor: "livingroom_02_mobile_temperature"
+    

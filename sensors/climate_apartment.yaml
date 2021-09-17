@@ -4,29 +4,24 @@
   type: mean
   entity_ids:
     #- sensor.tv_temperature
-    - sensor.living_mobile_temperature
-    - sensor.bookshelf_temperature
-  #icon: mdi:Thermometer
-  #unique_id: 'app/living/global/sensor/temperature'
+    - sensor.livingroom_02_mobile_temperature
+    - sensor.livingroom_02_bookshelf_temperature
 
 - platform: min_max
   name: 'Living humidity'
   type: mean
   entity_ids:
     #- sensor.tv_humidity
-    - sensor.living_mobile_humidity
-    - sensor.bookshelf_humidity
-  #icon: mdi:WaterPercent
-  #unique_id: 'app/living/global/sensor/humidity'
+    - sensor.livingroom_02_mobile_humidity
+    - sensor.livingroom_02_bookshelf_humidity
 
 - platform: min_max
   name: 'Apartment temperature'
   type: mean
   entity_ids:
-    #- sensor.tv_temperature
-    - sensor.living_mobile_temperature
-    - sensor.bookshelf_temperature
-    - sensor.kitchen_mobile_temperature
+    - sensor.livingroom_02_mobile_temperature
+    - sensor.livingroom_02_bookshelf_temperature
+    - sensor.kitchen_02_mobile_temperature
     - sensor.badroom_mobile_temperature
     - sensor.kidroom_mobile_temperature
 
@@ -34,136 +29,131 @@
   name: 'Apartment humidity'
   type: mean
   entity_ids:
-    #- sensor.tv_humidity
-    - sensor.living_mobile_humidity
-    - sensor.bookshelf_humidity
-    - sensor.kitchen_mobile_humidity
+    - sensor.livingroom_02_mobile_humidity
+    - sensor.livingroom_02_bookshelf_humidity
+    - sensor.kitchen_02_mobile_humidity
     - sensor.badroom_mobile_humidity
     - sensor.kidroom_mobile_humidity
-    
-# climate tv
-- platform: mqtt
-  name: 'TV temperature'
-  unique_id: 'app/living/tv/sensor/temperature'
-  value_template: '{{ value_json.temperature | round(1) }}'
-  state_topic: 'home/living/tv/sensor/dht'
-  device_class: temperature
-  unit_of_measurement: '°C'
-
-- platform: mqtt
-  name: 'TV humidity'
-  unique_id: 'app/living/tv/sensor/humidity'
-  value_template: '{{ value_json.humidity | round(1) }}'
-  state_topic: 'home/living/tv/sensor/dht'
-  device_class: humidity
-  unit_of_measurement: '%'
 
 # climate bookshelf
-- platform: mqtt
-  name: 'Bookshelf temperature'
-  unique_id: 'app/living/bookshelf/sensor/temperature'
-  state_topic: 'app/living/bookshelf/sensor/temperature/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: temperature
-  unit_of_measurement: '°C'
+#- platform: mqtt
+#  name: 'Bookshelf temperature'
+#  unique_id: 'app/living/bookshelf/sensor/temperature'
+#  state_topic: 'app/living/bookshelf/sensor/temperature/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: temperature
+#  unit_of_measurement: '°C'
+#  state_class: measurement
 
-- platform: mqtt
-  name: 'Bookshelf humidity'
-  unique_id: 'app/living/bookshelf/sensor/humidity'
-  state_topic: 'app/living/bookshelf/sensor/humidity/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: humidity
-  unit_of_measurement: '%'
+#- platform: mqtt
+#  name: 'Bookshelf humidity'
+#  unique_id: 'app/living/bookshelf/sensor/humidity'
+#  state_topic: 'app/living/bookshelf/sensor/humidity/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: humidity
+#  unit_of_measurement: '%'
+#  state_class: measurement
   
-- platform: mqtt
-  name: 'Bookshelf wifi signal'
-  unique_id: 'app/living/bookshelf/sensor/wifi_signal'
-  state_topic: 'app/living/bookshelf/sensor/wifi_signal/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: signal_strength
-  unit_of_measurement: 'dB'
+#- platform: mqtt
+#  name: 'Bookshelf wifi signal'
+#  unique_id: 'app/living/bookshelf/sensor/wifi_signal'
+#  state_topic: 'app/living/bookshelf/sensor/wifi_signal/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: signal_strength
+#  unit_of_measurement: 'dB'
+#  state_class: measurement
   
-- platform: mqtt
-  name: 'Bookshelf uptime'
-  unique_id: 'app/living/bookshelf/sensor/uptime'
-  state_topic: 'app/living/bookshelf/sensor/uptime/state'
-  availability_topic: 'app/living/bookshelf/status'
-  unit_of_measurement: 's'
+#- platform: mqtt
+#  name: 'Bookshelf uptime'
+#  unique_id: 'app/living/bookshelf/sensor/uptime'
+#  state_topic: 'app/living/bookshelf/sensor/uptime/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  unit_of_measurement: 's'
+#  state_class: measurement
   
 # climate living mobile
-- platform: mqtt
-  name: 'Living mobile temperature'
-  unique_id: 'app/living/bookshelf/sensor/living_mobile_temperature'
-  state_topic: 'app/living/bookshelf/sensor/living_mobile_temperature/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: temperature
-  unit_of_measurement: '°C'
+#- platform: mqtt
+#  name: 'Living mobile temperature'
+#  unique_id: 'app/living/bookshelf/sensor/living_mobile_temperature'
+#  state_topic: 'app/living/bookshelf/sensor/living_mobile_temperature/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: temperature
+#  unit_of_measurement: '°C'
+#  state_class: measurement
 
-- platform: mqtt
-  name: 'Living mobile humidity'
-  unique_id: 'app/living/bookshelf/sensor/living_mobile_humidity'
-  state_topic: 'app/living/bookshelf/sensor/living_mobile_humidity/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: humidity
-  unit_of_measurement: '%'
+#- platform: mqtt
+#  name: 'Living mobile humidity'
+#  unique_id: 'app/living/bookshelf/sensor/living_mobile_humidity'
+#  state_topic: 'app/living/bookshelf/sensor/living_mobile_humidity/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: humidity
+#  unit_of_measurement: '%'
+#  state_class: measurement
   
-- platform: mqtt
-  name: 'Living mobile battery level'
-  unique_id: 'app/living/bookshelf/sensor/living_mobile_battery_level'
-  state_topic: 'app/living/bookshelf/sensor/living_mobile_battery_level/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: battery
-  unit_of_measurement: '%'
+#- platform: mqtt
+#  name: 'Living mobile battery level'
+#  unique_id: 'app/living/bookshelf/sensor/living_mobile_battery_level'
+#  state_topic: 'app/living/bookshelf/sensor/living_mobile_battery_level/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: battery
+#  unit_of_measurement: '%'
+#  state_class: measurement
   
 # climate kitchen mobile
-- platform: mqtt
-  name: 'Kitchen mobile temperature'
-  unique_id: 'app/living/bookshelf/sensor/kitchen_mobile_temperature'
-  state_topic: 'app/living/bookshelf/sensor/kitchen_mobile_temperature/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: temperature
-  unit_of_measurement: '°C'
+#- platform: mqtt
+#  name: 'Kitchen mobile temperature'
+#  unique_id: 'app/living/bookshelf/sensor/kitchen_mobile_temperature'
+#  state_topic: 'app/living/bookshelf/sensor/kitchen_mobile_temperature/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: temperature
+#  unit_of_measurement: '°C'
+#  state_class: measurement
 
-- platform: mqtt
-  name: 'Kitchen mobile humidity'
-  unique_id: 'app/living/bookshelf/sensor/kitchen_mobile_humidity'
-  state_topic: 'app/living/bookshelf/sensor/kitchen_mobile_humidity/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: humidity
-  unit_of_measurement: '%'
+#- platform: mqtt
+#  name: 'Kitchen mobile humidity'
+#  unique_id: 'app/living/bookshelf/sensor/kitchen_mobile_humidity'
+#  state_topic: 'app/living/bookshelf/sensor/kitchen_mobile_humidity/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: humidity
+#  unit_of_measurement: '%'
+#  state_class: measurement
   
-- platform: mqtt
-  name: 'Kitchen mobile battery level'
-  unique_id: 'app/living/bookshelf/sensor/kitchen_mobile_battery_level'
-  state_topic: 'app/living/bookshelf/sensor/kitchen_mobile_battery_level/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: battery
-  unit_of_measurement: '%'
+#- platform: mqtt
+#  name: 'Kitchen mobile battery level'
+#  unique_id: 'app/living/bookshelf/sensor/kitchen_mobile_battery_level'
+#  state_topic: 'app/living/bookshelf/sensor/kitchen_mobile_battery_level/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: battery
+#  unit_of_measurement: '%'
+#  state_class: measurement
 
 # climate storage mobile
-- platform: mqtt
-  name: 'Storage mobile temperature'
-  unique_id: 'app/living/bookshelf/sensor/storage_mobile_temperature'
-  state_topic: 'app/living/bookshelf/sensor/storage_mobile_temperature/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: temperature
-  unit_of_measurement: '°C'
+#- platform: mqtt
+#  name: 'Storage mobile temperature'
+#  unique_id: 'app/living/bookshelf/sensor/storage_mobile_temperature'
+#  state_topic: 'app/living/bookshelf/sensor/storage_mobile_temperature/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: temperature
+#  unit_of_measurement: '°C'
+#  state_class: measurement
 
-- platform: mqtt
-  name: 'Storage mobile humidity'
-  unique_id: 'app/living/bookshelf/sensor/storage_mobile_humidity'
-  state_topic: 'app/living/bookshelf/sensor/storage_mobile_humidity/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: humidity
-  unit_of_measurement: '%'
+#- platform: mqtt
+#  name: 'Storage mobile humidity'
+#  unique_id: 'app/living/bookshelf/sensor/storage_mobile_humidity'
+#  state_topic: 'app/living/bookshelf/sensor/storage_mobile_humidity/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: humidity
+#  unit_of_measurement: '%'
+#  state_class: measurement
   
-- platform: mqtt
-  name: 'Storage mobile battery level'
-  unique_id: 'app/living/bookshelf/sensor/storage_mobile_battery_level'
-  state_topic: 'app/living/bookshelf/sensor/storage_mobile_battery_level/state'
-  availability_topic: 'app/living/bookshelf/status'
-  device_class: battery
-  unit_of_measurement: '%'
+#- platform: mqtt
+#  name: 'Storage mobile battery level'
+#  unique_id: 'app/living/bookshelf/sensor/storage_mobile_battery_level'
+#  state_topic: 'app/living/bookshelf/sensor/storage_mobile_battery_level/state'
+#  availability_topic: 'app/living/bookshelf/status'
+#  device_class: battery
+#  unit_of_measurement: '%'
+#  state_class: measurement
   
   
   
@@ -175,6 +165,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: signal_strength
   unit_of_measurement: 'dB'
+  state_class: measurement
   
 - platform: mqtt
   name: 'Bedroom control uptime'
@@ -182,6 +173,7 @@
   state_topic: 'app/bedroom/control/sensor/uptime/state'
   availability_topic: 'app/bedroom/control/status'
   unit_of_measurement: 's'
+  state_class: measurement
   
   # climate bedroom mobile
 - platform: mqtt
@@ -191,6 +183,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: temperature
   unit_of_measurement: '°C'
+  state_class: measurement
 
 - platform: mqtt
   name: 'Bedroom mobile humidity'
@@ -199,6 +192,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: humidity
   unit_of_measurement: '%'
+  state_class: measurement
   
 - platform: mqtt
   name: 'Bedroom mobile battery level'
@@ -207,6 +201,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: battery
   unit_of_measurement: '%'
+  state_class: measurement
   
   # climate badroom mobile
 - platform: mqtt
@@ -216,6 +211,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: temperature
   unit_of_measurement: '°C'
+  state_class: measurement
 
 - platform: mqtt
   name: 'Badroom mobile humidity'
@@ -224,6 +220,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: humidity
   unit_of_measurement: '%'
+  state_class: measurement
   
 - platform: mqtt
   name: 'Badroom mobile battery level'
@@ -232,6 +229,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: battery
   unit_of_measurement: '%'
+  state_class: measurement
   
   # climate kidroom mobile
 - platform: mqtt
@@ -241,6 +239,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: temperature
   unit_of_measurement: '°C'
+  state_class: measurement
 
 - platform: mqtt
   name: 'Kidroom mobile humidity'
@@ -249,6 +248,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: humidity
   unit_of_measurement: '%'
+  state_class: measurement
   
 - platform: mqtt
   name: 'Kidroom mobile battery level'
@@ -257,6 +257,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: battery
   unit_of_measurement: '%'
+  state_class: measurement
   
   # climate sportroom mobile
 - platform: mqtt
@@ -266,6 +267,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: temperature
   unit_of_measurement: '°C'
+  state_class: measurement
 
 - platform: mqtt
   name: 'Sportroom mobile humidity'
@@ -282,6 +284,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: battery
   unit_of_measurement: '%'
+  state_class: measurement
   
   # climate hall mobile
 - platform: mqtt
@@ -291,6 +294,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: temperature
   unit_of_measurement: '°C'
+  state_class: measurement
 
 - platform: mqtt
   name: 'Hall mobile humidity'
@@ -299,6 +303,7 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: humidity
   unit_of_measurement: '%'
+  state_class: measurement
   
 - platform: mqtt
   name: 'Hall mobile battery level'
@@ -307,4 +312,5 @@
   availability_topic: 'app/bedroom/control/status'
   device_class: battery
   unit_of_measurement: '%'
+  state_class: measurement
   

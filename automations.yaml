@@ -60,7 +60,11 @@
   action:
   - service: light.turn_off
     data: {}
-    entity_id: light.tv_backlight, light.bookshelf, light.christmas_tree
+    target:
+      entity_id:
+      - light.tv_backlight
+      - light.christmas_tree
+      - light.livingroom_02_bookshelf
   mode: single
 - id: '1601008510611'
   alias: Tv turned on
@@ -80,6 +84,11 @@
   - condition: state
     entity_id: media_player.cyril
     state: playing
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
   - service: mqtt.publish
     data:
       topic: app/living/tv/cec/tx
@@ -195,7 +204,7 @@
     below: '80'
   - platform: numeric_state
     entity_id: sensor.speedtest_upload
-    below: '7'
+    below: '6'
   condition: []
   action:
   - service: script.speedtest_notification
@@ -344,7 +353,7 @@
         data:
           position: 55
 - id: '1618245636173'
-  alias: Sonoff Zigbee Switch Doorbell
+  alias: 'Doorbell Sonoff Zigbee Switch '
   description: ''
   use_blueprint:
     path: garykrige/zha-sonoff-zigbee-switch.yaml
@@ -360,14 +369,14 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: sensor.kitchen_button
+    entity_id: sensor.kitchen_02_wall_button
     to: '2'
   condition: []
   action:
   - service: script.open_door
   mode: single
 - id: '1622658384029'
-  alias: Frontdoor doorbell
+  alias: Doorbell entry 01
   description: ''
   trigger:
   - platform: state
@@ -377,7 +386,51 @@
   action:
   - service: script.doorbell
     data:
-      name: Doorbell frontdoor
+      name: Doorbell entry 01
       sound: /Doorbell-SoundBible.com-516741062.mp3
       camera: camera.front_gate
+  mode: single
+- id: '1627895698031'
+  alias: Notify battery level
+  description: ''
+  use_blueprint:
+    path: Sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      threshold: 20
+      exclude:
+        entity_id: []
+        device_id:
+        - 6b3d04db9ae748c5900bc5f1a071cb58
+        - 45178b0e490248b680af94f38a618493
+        - 251a0d057c0c40ce061d4b340cc0f861
+        - 255e825a8e69492bbe7ada0caaccd65a
+      actions:
+      - service: notify.default
+        data:
+          title: Battery low!
+          message: 'Following devices have low batteries: {{sensors}}'
+- id: '1630422750015'
+  alias: Doorbell entry 03
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.entry_03_doorbell
+    to: 'on'
+  condition: []
+  action:
+  - service: script.doorbell
+    data:
+      name: Doorbell entry 03
+      sound: /Doorbell-SoundBible.com-516741062.mp3
+      camera: camera.front_door_apartment
+  mode: single
+- id: '1631015475071'
+  alias: Tag Front door apartment is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: f03e4827-949f-448a-ae71-0a95722e2918
+  condition: []
+  action:
+  - service: script.open_door
   mode: single

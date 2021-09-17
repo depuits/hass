@@ -1,49 +1,101 @@
 - id: '1587622537571'
   name: Movie
   entities:
-    light.bookshelf:
-      brightness: 255
-      effect: none
-      effect_list:
-      - colorfade_slow
-      - colorfade_fast
-      - flash
-      friendly_name: Bookshelf
-      hs_color:
-      - 60
-      - 100
-      rgb_color:
-      - 255
-      - 255
-      - 0
-      state: 'on'
-      supported_features: 61
-      xy_color:
-      - 0.444
-      - 0.517
-    light.kitchen_wall:
-      effect_list:
-      - flash
-      friendly_name: Kitchen wall
-      state: 'off'
-      supported_features: 45
     light.tv_backlight:
-      brightness: 255
-      effect: none
       effect_list:
-      - colorfade_slow
-      - colorfade_fast
-      - flash
-      friendly_name: TV backlight
+      - Solid
+      - Boblight Server
+      - Platform Capture
+      - USB Capture
+      - Atomic swirl
+      - Blue mood blobs
+      - Breath
+      - Candle
+      - Cinema brighten lights
+      - Cinema dim lights
+      - Cold mood blobs
+      - Collision
+      - Color traces
+      - Double swirl
+      - Fire
+      - Flags Germany/Sweden
+      - Full color mood blobs
+      - Green mood blobs
+      - Knight rider
+      - Led Test
+      - Light clock
+      - Lights
+      - Notify blue
+      - Pac-Man
+      - Plasma
+      - Police Lights Single
+      - Police Lights Solid
+      - Rainbow mood
+      - Rainbow swirl
+      - Rainbow swirl fast
+      - Random
+      - Red mood blobs
+      - Sea waves
+      - Snake
+      - Sparks
+      - Strobe red
+      - Strobe white
+      - System Shutdown
+      - Trails
+      - Trails color
+      - Warm mood blobs
+      - Waves with Color
+      - X-Mas
+      supported_color_modes:
+      - hs
+      color_mode: hs
+      brightness: 255
       hs_color:
-      - 60
-      - 100
+      - 0
+      - 0
       rgb_color:
       - 255
       - 255
-      - 0
-      state: 'on'
-      supported_features: 61
+      - 255
       xy_color:
-      - 0.444
-      - 0.517
+      - 0.323
+      - 0.329
+      effect: USB Capture
+      friendly_name: TV backlight
+      icon: mdi:television-ambient-light
+      supported_features: 21
+      state: 'on'
+    light.livingroom_02_bookshelf:
+      effect_list:
+      - None
+      - Random
+      - Strobe
+      - Flicker
+      supported_color_modes:
+      - rgb
+      color_mode: rgb
+      brightness: 255
+      hs_color:
+      - 50.588
+      - 100
+      rgb_color:
+      - 255
+      - 215
+      - 0
+      xy_color:
+      - 0.494
+      - 0.474
+      effect: None
+      friendly_name: Livingroom 02 bookshelf
+      supported_features: 44
+      state: 'on'
+    light.kitchen_02_wall:
+      effect_list:
+      - None
+      - Strobe
+      - Flicker
+      supported_color_modes:
+      - brightness
+      friendly_name: Kitchen 02 Wall
+      supported_features: 44
+      state: 'off'

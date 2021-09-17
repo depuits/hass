@@ -1,15 +1,15 @@
-- platform: mqtt
-  schema: json
-  name: 'Kitchen wall'
-  unique_id: 'app/kitchen/wall/light/wall'
-  state_topic: 'app/kitchen/wall/light/wall/state'
-  command_topic: 'app/kitchen/wall/light/wall/command'
-  availability_topic: 'app/kitchen/wall/status'
-  brightness: true
-  effect: true
-  effect_list: [strobe, flicker]
-  optimistic: false
-  qos: 0
+#- platform: mqtt
+#  schema: json
+#  name: 'Kitchen wall'
+#  unique_id: 'app/kitchen/wall/light/wall'
+#  state_topic: 'app/kitchen/wall/light/wall/state'
+#  command_topic: 'app/kitchen/wall/light/wall/command'
+#  availability_topic: 'app/kitchen/wall/status'
+#  brightness: true
+#  effect: true
+#  effect_list: [strobe, flicker]
+#  optimistic: false
+#  qos: 0
   
 #- platform: mqtt
 #  schema: json
@@ -24,16 +24,16 @@
 #  optimistic: false
 #  qos: 0
 
-- platform: mqtt
-  schema: json
-  name: 'Bookshelf'
-  unique_id: 'app/living/bookshelf/light/center'
-  state_topic: 'app/living/bookshelf/light/center/state'
-  command_topic: 'app/living/bookshelf/light/center/command'
-  availability_topic: 'app/living/bookshelf/status'
-  brightness: true
-  rgb: true
-  effect: true
-  effect_list: [random, strobe, flicker]
-  optimistic: false
-  qos: 0
+#- platform: mqtt
+#  schema: json
+#  name: 'Bookshelf'
+#  unique_id: 'app/living/bookshelf/light/center'
+#  state_topic: 'app/living/bookshelf/light/center/state'
+#  command_topic: 'app/living/bookshelf/light/center/command'
+#  availability_topic: 'app/living/bookshelf/status'
+#  brightness: true
+#  rgb: true
+#  effect: true
+#  effect_list: [random, strobe, flicker]
+#  optimistic: false
+#  qos: 0

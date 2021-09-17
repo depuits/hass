@@ -1,19 +1,17 @@
 substitutions:
-  devicename: app_kitchen_wall
-  topic: 'app/kitchen/wall'
+  devicename: kitchen-02-wall
+  displayname: 'Kitchen 02 wall'
 
 packages:
   device_base: !include common/esp8266.yaml
-
-<<: !include common/mqtt.yaml
-
+  
 external_components:
   - source: github://depuits/esphome-AButt
 
 light:
   - platform: monochromatic
     id: wall
-    name: "Wall"
+    name: '${displayname}'
     output: out_l
     effects:
       - strobe:
@@ -27,8 +25,7 @@ output:
 
 sensor:
   - platform: AButt
-    name: "Button"
-    #retain: False
+    name: '${displayname} button'
     inverted: True
     pin: 0
     on_value:
@@ -50,14 +47,6 @@ sensor:
               - delay: 1s
               - light.toggle: wall
 
-#  - platform: dht
-#    pin: GPIO16
-#    temperature:
-#      name: "Living Room Bookshelf Temperature"
-#    humidity:
-#      name: "Living Room Bookshelf Humidity"
-#    update_interval: 30s
-#    model: DHT22
 
 #binary_sensor:
 #  - platform: gpio
