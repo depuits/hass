@@ -1,6 +1,6 @@
-sensor.living_humidity:
+sensor.livingroom_02_humidity:
   icon: mdi:water-percent
-sensor.living_temperature:
+sensor.livingroom_02_temperature:
   icon: mdi:thermometer
 sensor.apartment_humidity:
   icon: mdi:water-percent

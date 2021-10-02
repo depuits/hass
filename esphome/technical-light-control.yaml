@@ -1,11 +1,9 @@
 substitutions:
-  devicename: house_firstfloor_control
-  topic: 'house/firstfloor'
+  devicename: technical-light-control
+  displayname: 'Technical light control'
 
 packages:
   device_base: !include common/esp32.yaml
-
-<<: !include common/mqtt.yaml
 
 external_components:
   - source: github://depuits/esphome-AButt
@@ -18,71 +16,70 @@ sensor:
     mac_address: A4:C1:38:63:45:A6
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Hallway Mobile Temperature"
+      name: "Hallway mobile Temperature"
     humidity:
-      name: "Hallway Mobile Humidity"
+      name: "Hallway mobile Humidity"
     battery_level:
-      name: "Hallway Mobile Battery Level"
+      name: "Hallway mobile Battery Level"
       
   #ATC_B8A417
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:B8:A4:17
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Technical Mobile Temperature"
+      name: "Technical mobile Temperature"
     humidity:
-      name: "Technical Mobile Humidity"
+      name: "Technical mobile Humidity"
     battery_level:
-      name: "Technical Mobile Battery Level"
-    
+      name: "Technical mobile battery level"
+     
   #ATC_2F4235
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:2F:42:35
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Room 2 Mobile Temperature"
+      name: "Bedroom 02 mobile temperature"
     humidity:
-      name: "Room 2 Mobile Humidity"
+      name: "Bedroom 02 mobile humidity"
     battery_level:
-      name: "Room 2 Mobile Battery Level"
+      name: "Bedroom 02 mobile battery level"
       
   #ATC_59AEB8
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:59:AE:B8
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Office Mobile Temperature"
+      name: "Bedroom 03 mobile temperature"
     humidity:
-      name: "Office Mobile Humidity"
+      name: "Bedroom 03 mobile humidity"
     battery_level:
-      name: "Office Mobile Battery Level"
+      name: "Bedroom 03 mobile battery level"
       
   #ATC_82EEC3
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:82:EE:C3
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Room 4 Mobile Temperature"
+      name: "Bedroom 04 mobile temperature"
     humidity:
-      name: "Room 4 Mobile Humidity"
+      name: "Bedroom 04 mobile humidity"
     battery_level:
-      name: "Room 4 Mobile Battery Level"
+      name: "Bedroom 04 mobile battery level"
       
   #ATC_13AD3A
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:13:AD:3A
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Badroom Mobile Temperature"
+      name: "Badroom 02 mobile temperature"
     humidity:
-      name: "Badroom Mobile Humidity"
+      name: "Badroom 02 mobile humidity"
     battery_level:
-      name: "Badroom Mobile Battery Level"
+      name: "Badroom 02 mobile battery level"
     
   #Buttons
   - platform: AButt
-    name: "Bedroom button"
-    retain: False
+    name: "Bedroom 02 button"
     inverted: True
     pin: 22
     on_value:
@@ -91,26 +88,25 @@ sensor:
             condition:
               lambda: 'return x == 1;'
             then:
-              - light.toggle: bedroom_light
+              - light.toggle: bedroom_02_light
         - if:
             condition:
               lambda: 'return x == 2;'
             then:
-              - switch.toggle: bedroom_cover_direction
+              - switch.toggle: bedroom_02_cover_direction
         - if:
             condition:
               lambda: 'return x == -1;'
             then:
-              - switch.turn_on: bedroom_cover_power
+              - switch.turn_on: bedroom_02_cover_power
         - if:
             condition:
               lambda: 'return x == 0;'
             then:
-              - switch.turn_off: bedroom_cover_power
+              - switch.turn_off: bedroom_02_cover_power
 
   - platform: AButt
-    name: "Bedroom dressing button"
-    retain: False
+    name: "Bedroom 02 dressing button"
     inverted: True
     pin: 17
     on_value:
@@ -119,29 +115,29 @@ sensor:
             condition:
               lambda: 'return x == 1;'
             then:
-              - light.toggle: bedroomDressing_light
+              - light.toggle: bedroom_02_dressing_light
         - if:
             condition:
               lambda: 'return x == 2;'
             then:
-              - light.toggle: bedroom_light
+              - light.toggle: bedroom_02_light
         - if:
             condition:
               lambda: 'return x == -1;'
             then:
               - cover.control:
-                  id: bedroom_cover
+                  id: bedroom_02_cover
                   position: 50%
 
 light:
   - platform: binary
-    name: "Bedroom"
+    name: "Bedroom 02"
     output: gpio_lightRoom
-    id: bedroom_light
+    id: bedroom_02_light
   - platform: binary
-    name: "Bedroom dressing"
+    name: "Bedroom 02 dressing"
     output: gpio_lightDressing
-    id: bedroomDressing_light
+    id: bedroom_02_dressing_light
 
 output:
   - platform: gpio
@@ -160,31 +156,31 @@ switch:
     pin: 
       number: GPIO23
       inverted: True
-    name: "Bedroom cover power"
-    id: bedroom_cover_power
+    name: "Bedroom 02 cover power"
+    id: bedroom_02_cover_power
   - platform: gpio
     pin: 
       number: GPIO19
       inverted: True
-    name: "Bedroom cover direction"
-    id: bedroom_cover_direction
+    name: "Bedroom 02 cover direction"
+    id: bedroom_02_cover_direction
 
 cover:
   - platform: time_based
-    name: "Bedroom"
-    id: bedroom_cover
+    name: "Bedroom 02"
+    id: bedroom_02_cover
     has_built_in_endstop: true 
 
     open_action:
-      - switch.turn_on: bedroom_cover_direction
-      - switch.turn_on: bedroom_cover_power
+      - switch.turn_on: bedroom_02_cover_direction
+      - switch.turn_on: bedroom_02_cover_power
     open_duration: 27s
 
     close_action:
-      - switch.turn_off: bedroom_cover_direction
-      - switch.turn_on: bedroom_cover_power
+      - switch.turn_off: bedroom_02_cover_direction
+      - switch.turn_on: bedroom_02_cover_power
     close_duration: 27s
 
     stop_action:
-      - switch.turn_off: bedroom_cover_power
-      - switch.turn_off: bedroom_cover_direction
+      - switch.turn_off: bedroom_02_cover_power
+      - switch.turn_off: bedroom_02_cover_direction

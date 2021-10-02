@@ -1,11 +1,9 @@
 substitutions:
-  devicename: app_bedroom_control
-  topic: 'app/bedroom/control'
+  devicename: bedroom-06-control
+  displayname: 'Bedroom 06 control'
 
 packages:
   device_base: !include common/esp32.yaml
-
-<<: !include common/mqtt.yaml
 
 esp32_ble_tracker:
 
@@ -15,52 +13,52 @@ sensor:
     mac_address: A4:C1:38:D8:2F:9C
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Bedroom Mobile Temperature"
+      name: "Bedroom 05 mobile temperature"
     humidity:
-      name: "Bedroom Mobile Humidity"
+      name: "Bedroom 05 mobile humidity"
     battery_level:
-      name: "Bedroom Mobile Battery Level"
+      name: "Bedroom 05 mobile battery level"
         
   #ATC_84A994
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:84:A9:94
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Badroom Mobile Temperature"
+      name: "Badroom 03 mobile temperature"
     humidity:
-      name: "Badroom Mobile Humidity"
+      name: "Badroom 03 mobile humidity"
     battery_level:
-      name: "Badroom Mobile Battery Level"
+      name: "Badroom 03 mobile battery level"
       
   #ATC_414283
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:41:42:83
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Kidroom Mobile Temperature"
+      name: "Bedroom 06 mobile temperature"
     humidity:
-      name: "Kidroom Mobile Humidity"
+      name: "Bedroom 06 mobile humidity"
     battery_level:
-      name: "Kidroom Mobile Battery Level"
+      name: "Bedroom 06 mobile battery level"
       
   #ATC_DD8395
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:DD:83:95
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Sportroom Mobile Temperature"
+      name: "Bedroom 07 mobile temperature"
     humidity:
-      name: "Sportroom Mobile Humidity"
+      name: "Bedroom 07 mobile humidity"
     battery_level:
-      name: "Sportroom Mobile Battery Level"
+      name: "Bedroom 07 mobile battery level"
       
   #ATC_FCF692
   - platform: xiaomi_lywsd03mmc
     mac_address: A4:C1:38:FC:F6:92
     bindkey: "05e04076be48f427f3d90e166d0fbd5e"
     temperature:
-      name: "Hall Mobile Temperature"
+      name: "Entry 03 mobile temperature"
     humidity:
-      name: "Hall Mobile Humidity"
+      name: "Entry 03 mobile humidity"
     battery_level:
-      name: "Hall Mobile Battery Level"
+      name: "Entry 03 mobile battery level"

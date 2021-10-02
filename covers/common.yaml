@@ -9,12 +9,3 @@
   state_open: open
   payload_close: close
   state_closed: close
-  
-- platform: mqtt
-  name: Bedroom Ruben cover
-  unique_id: 'house/firstfloor/cover/bedroom'
-  command_topic: 'house/firstfloor/cover/bedroom/command'
-  set_position_topic: 'house/firstfloor/cover/bedroom/position/command'
-  position_topic: 'house/firstfloor/cover/bedroom/position/state'
-  availability_topic: 'house/firstfloor/status'
-  device_class: blind

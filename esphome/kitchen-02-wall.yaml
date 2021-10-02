@@ -7,6 +7,7 @@ packages:
   
 external_components:
   - source: github://depuits/esphome-AButt
+    refresh: 0s
 
 light:
   - platform: monochromatic
@@ -39,13 +40,18 @@ sensor:
             condition:
               lambda: 'return x == 2;'
             then:
-              - light.toggle: wall
-              - delay: 1s
-              - light.toggle: wall
-              - delay: 1s
-              - light.toggle: wall
-              - delay: 1s
-              - light.toggle: wall
+              - light.turn_on:
+                  id: wall
+                  brightness: 0.2
+        - while:
+            condition:
+              lambda: 'return x == -1;'
+            then:
+              - light.dim_relative:
+                  id: wall
+                  relative_brightness: 1%
+                  transition_length: 0.01s
+              - delay: 0.05s
 
 
 #binary_sensor:

@@ -94,18 +94,19 @@
       topic: app/living/tv/cec/tx
       payload: 4f:82:20:00
   mode: single
-- alias: 'Utilities: washing machine notification'
+- id: 987c5eaeb9bd4cc59722816ae1ed9996
+  alias: 'Utilities: washer notification'
   trigger:
-    platform: state
-    entity_id: binary_sensor.washing_machine
+  - platform: state
+    entity_id: binary_sensor.washer
     from: 'off'
     to: 'on'
   action:
-    service: script.utility_notification
+  - service: script.utility_notification
     data:
-      name: washing_machine
+      name: washer
       emojis: 👚👕
-  id: 987c5eaeb9bd4cc59722816ae1ed9996
+  mode: single
 - id: '1602311902597'
   alias: Climate - Scheduler
   description: Change thermostat to script schedule.
@@ -265,18 +266,19 @@
     data: {}
   mode: single
 - id: '1613410955143'
-  alias: Light bedroom ruben turned off
+  alias: Light bedroom 02 turned off
   description: ''
   trigger:
   - platform: state
-    entity_id: light.bedroom_ruben
+    entity_id: light.bedroom_02
     from: 'on'
     to: 'off'
   condition: []
   action:
   - service: light.turn_off
     data: {}
-    entity_id: light.bedroom_ruben_dressing
+    target:
+      entity_id: light.bedroom_02_dressing
   mode: single
 - id: '1613977021864'
   alias: Covers open and close
@@ -299,11 +301,15 @@
       sequence:
       - service: cover.open_cover
         data: {}
-        entity_id: cover.bedroom_ruben_cover
+        target:
+          entity_id:
+          - cover.bedroom_02
     default:
     - service: cover.close_cover
       data: {}
-      entity_id: cover.bedroom_ruben_cover
+      target:
+        entity_id:
+        - cover.bedroom_02
   mode: single
 - id: '1615555412781'
   alias: Notify completed torrent
@@ -380,7 +386,7 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: binary_sensor.house_doorbell
+    entity_id: binary_sensor.entry_01_doorbell
     to: 'on'
   condition: []
   action:
@@ -396,7 +402,7 @@
   use_blueprint:
     path: Sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
     input:
-      threshold: 20
+      threshold: 30
       exclude:
         entity_id: []
         device_id:

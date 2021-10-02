@@ -21,7 +21,6 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-#camera: !include cameras.yaml
 
 light: !include_dir_merge_list  lights
 sensor: !include_dir_merge_list sensors
@@ -30,9 +29,18 @@ cover: !include_dir_merge_list covers
 
 python_script:
 
-# Text to speech
 tts:
   - platform: google_translate
+
+browser_mod:
+  prefix: 'browser_'
+  devices:
+    7b4f16e7-bb7eb855:
+      name: 'browser_joeri_desktop'
+    27b38582-170af574:
+      name: 'browser_joeri_phone'
+  disable:
+    - all
 
 recorder:
   exclude: !include recorder_exclude.yaml
@@ -50,13 +58,14 @@ influxdb:
 binary_sensor:
   - platform: template
     sensors:
-      washing_machine:
-        friendly_name: Washing machine
+      washer:
+        unique_id: 'washingroom_washer_running'
+        friendly_name: Washer
         value_template: >
-          {{ states("sensor.washing_machine_power") | float(0) > 12 }}
+          {{ states("sensor.washer_power") | float(0) > 12 }}
         delay_off: "00:10:00"
         icon_template: >
-          {% if is_state("binary_sensor.washing_machine", "on") %}
+          {% if is_state("binary_sensor.washer", "on") %}
             mdi:washing-machine
           {% else %}
             mdi:washing-machine-off
@@ -86,12 +95,6 @@ binary_sensor:
     name: Evening mood lights
     after: sunset
     before: '23:00'
-
-  - platform: mqtt
-    name: 'House doorbell'
-    state_topic: 'house/groundfloor/technical/binary_sensor/doorbell/state'
-    unique_id: 'house/groundfloor/technical/binary_sensor/doorbell'
-    availability_topic: 'house/groundfloor/technical/status'
     
 
 media_player:
@@ -129,15 +132,15 @@ climate:
   - platform: generic_thermostat
     name: Central Heating
     heater: switch.thermostat_switch
-    target_sensor: sensor.apartment_temperature
+    target_sensor: sensor.livingroom_02_temperature
     min_temp: 15
     max_temp: 28
     cold_tolerance: 0.5
-    hot_tolerance: 0.5
+    hot_tolerance: 0 # changed to 0 because the latent heat of the radiators heat another .5 degree
     min_cycle_duration:
-      minutes: 1
+      minutes: 5
     initial_hvac_mode: 'heat'
-    target_temp: 20
+    target_temp: 21
     away_temp: 18
 
 rest_command:

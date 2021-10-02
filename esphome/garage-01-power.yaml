@@ -1,11 +1,9 @@
 substitutions:
-  devicename: house_groundfloor_technical
-  topic: 'house/groundfloor/technical'
+  devicename: garage-01-power
+  displayname: 'Garage 01 power'
 
 packages:
   device_base: !include common/esp32.yaml
-
-<<: !include common/mqtt.yaml
 
 external_components:
   - source: github://depuits/esphome-SDM-enery-meter
@@ -17,33 +15,33 @@ logger:
 uart:
   tx_pin: TX
   rx_pin: RX
-  baud_rate: 9600
+  baud_rate: 4800
   stop_bits: 1
 
 sensor:
   - platform: sdm
     dere_pin: 16
-    baud_rate: 9600
+    baud_rate: 4800
     channel: 1
     sdm_phase_1_voltage:
-      name: "Washer voltage"
+      name: "Apartment phase 1 voltage"
     sdm_phase_1_current:
-      name: "Washer current"
+      name: "Apartment phase 1 current"
     sdm_phase_1_power:
-      name: "Washer power"
+      name: "Apartment phase 1 power"
+    sdm_total_system_power:
+      name: "Apartment total power"
     sdm_total_active_energy:
-      name: "Washer total"
+      name: "Apartment total energy"
 
 #  - platform: AButt
-#    name: "Doorbell"
-#    retain: False
+#    name: "Entry 03 doorbell"
 #    inverted: True
 #    pin: 27
 
 binary_sensor:
   - platform: gpio
-    name: "Doorbell"
-    retain: False
+    name: "Entry 03 doorbell"
     pin:
       number: GPIO27
       inverted: True

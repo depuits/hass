@@ -1,6 +1,6 @@
 substitutions:
-  devicename: livingroom-02-tv
-  displayname: 'Livingroom 02 tv'
+  devicename: bedroom-01-dressing-power
+  displayname: 'Bedroom 01 dressing power'
 
 packages:
   device_base: !include common/esp32.yaml
@@ -15,33 +15,32 @@ logger:
 uart:
   tx_pin: TX
   rx_pin: RX
-  baud_rate: 4800
+  baud_rate: 9600
   stop_bits: 1
 
 sensor:
   - platform: sdm
     dere_pin: 16
-    baud_rate: 4800
+    baud_rate: 9600
     channel: 1
     sdm_phase_1_voltage:
-      name: "Apartment phase 1 voltage"
+      name: "Washer voltage"
     sdm_phase_1_current:
-      name: "Apartment phase 1 current"
+      name: "Washer current"
     sdm_phase_1_power:
-      name: "Apartment phase 1 power"
-    sdm_total_system_power:
-      name: "Apartment total power"
+      name: "Washer power"
     sdm_total_active_energy:
-      name: "Apartment total energy"
+      name: "Washer total"
 
 #  - platform: AButt
-#    name: "Entry 03 doorbell"
+#    name: "Doorbell"
+#    retain: False
 #    inverted: True
 #    pin: 27
 
 binary_sensor:
   - platform: gpio
-    name: "Entry 03 doorbell"
+    name: "Entry 01 doorbell"
     pin:
       number: GPIO27
       inverted: True
