@@ -14,10 +14,16 @@ sensor:
       name: "${displayname} temperature"  
       filters:
         - filter_out: nan
+        - median:
+            window_size: 5
+            send_every: 2
     humidity:
       name: "${displayname} humidity"
       filters:
         - filter_out: nan
+        - median:
+            window_size: 5
+            send_every: 2
     update_interval: 30s
     model: DHT22
 
@@ -55,6 +61,17 @@ sensor:
     battery_level:
       name: "Storage mobile battery level"
 
+  #unflashed
+  - platform: xiaomi_lywsd03mmc
+    mac_address: A4:C1:38:3A:CB:7A
+    bindkey: "7700d9587691f0963708ff4035d20c83"
+    temperature:
+      name: "Garage 02 mobile temperature"
+    humidity:
+      name: "Garage 02 mobile humidity"
+    battery_level:
+      name: "Garage 02 mobile battery level"
+      
 light:
   - platform: rgb
     name: "${displayname}"

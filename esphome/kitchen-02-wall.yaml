@@ -7,7 +7,6 @@ packages:
   
 external_components:
   - source: github://depuits/esphome-AButt
-    refresh: 0s
 
 light:
   - platform: monochromatic
@@ -18,7 +17,6 @@ light:
       - strobe:
       - flicker:
 
-# Example output entry
 output:
   - platform: esp8266_pwm
     id: out_l
@@ -27,8 +25,10 @@ output:
 sensor:
   - platform: AButt
     name: '${displayname} button'
-    inverted: True
-    pin: 0
+    pin:
+      number: GPIO0
+      inverted: True
+      mode: INPUT_PULLUP
     on_value:
       then:
         - if:

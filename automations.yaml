@@ -402,7 +402,7 @@
   use_blueprint:
     path: Sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
     input:
-      threshold: 30
+      threshold: 35
       exclude:
         entity_id: []
         device_id:
@@ -439,4 +439,38 @@
   condition: []
   action:
   - service: script.open_door
+  mode: single
+- id: '1633527431657'
+  alias: Entity not updating alert
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.badroom_02_mobile_temperature
+    - sensor.badroom_03_mobile_temperature
+    - sensor.bedroom_02_mobile_temperature
+    - sensor.bedroom_03_mobile_temperature
+    - sensor.bedroom_04_mobile_temperature
+    - sensor.bedroom_05_mobile_temperature
+    - sensor.bedroom_06_mobile_temperature
+    - sensor.bedroom_07_mobile_temperature
+    - sensor.entry_03_mobile_temperature
+    - sensor.hallway_mobile_temperature
+    - sensor.kitchen_02_mobile_temperature
+    - sensor.livingroom_02_mobile_temperature
+    - sensor.garage_02_mobile_temperature
+    - sensor.storage_mobile_temperature
+    - sensor.technical_mobile_temperature
+    - sensor.apartment_phase_1_power
+    for:
+      hours: 8
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - service: notify.default
+    data:
+      message: '{{ trigger.to_state.attributes.friendly_name }} has not updated in
+        8 hours'
   mode: single

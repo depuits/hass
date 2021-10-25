@@ -80,8 +80,10 @@ sensor:
   #Buttons
   - platform: AButt
     name: "Bedroom 02 button"
-    inverted: True
-    pin: 22
+    pin:
+      number: GPIO22
+      inverted: True
+      mode: INPUT_PULLUP
     on_value:
       then:
         - if:
@@ -93,22 +95,24 @@ sensor:
             condition:
               lambda: 'return x == 2;'
             then:
-              - switch.toggle: bedroom_02_cover_direction
+              - cover.stop: bedroom_02_cover
         - if:
             condition:
               lambda: 'return x == -1;'
             then:
-              - switch.turn_on: bedroom_02_cover_power
+              - cover.toggle: bedroom_02_cover
         - if:
             condition:
               lambda: 'return x == 0;'
             then:
-              - switch.turn_off: bedroom_02_cover_power
+              - cover.stop: bedroom_02_cover
 
   - platform: AButt
     name: "Bedroom 02 dressing button"
-    inverted: True
-    pin: 17
+    pin:
+      number: GPIO17
+      inverted: True
+      mode: INPUT_PULLUP
     on_value:
       then:
         - if:

@@ -5,9 +5,6 @@ substitutions:
 packages:
   device_base: !include common/esp32.yaml
 
-external_components:
-  - source: github://depuits/esphome-SDM-enery-meter
-
 # Disable logging
 logger:
   baud_rate: 0
@@ -18,27 +15,22 @@ uart:
   baud_rate: 4800
   stop_bits: 1
 
+modbus:
+  flow_control_pin: 16
+  
 sensor:
-  - platform: sdm
-    dere_pin: 16
-    baud_rate: 4800
-    channel: 1
-    sdm_phase_1_voltage:
-      name: "Apartment phase 1 voltage"
-    sdm_phase_1_current:
-      name: "Apartment phase 1 current"
-    sdm_phase_1_power:
-      name: "Apartment phase 1 power"
-    sdm_total_system_power:
-      name: "Apartment total power"
-    sdm_total_active_energy:
+  - platform: sdm_meter
+    phase_a:
+      current:
+        name: "Apartment phase 1 current"
+      voltage:
+        name: "Apartment phase 1 voltage"
+      active_power:
+        name: "Apartment phase 1 power"
+    import_active_energy:
       name: "Apartment total energy"
-
-#  - platform: AButt
-#    name: "Entry 03 doorbell"
-#    inverted: True
-#    pin: 27
-
+    update_interval: 15s
+    
 binary_sensor:
   - platform: gpio
     name: "Entry 03 doorbell"

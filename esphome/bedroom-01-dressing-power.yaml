@@ -5,9 +5,6 @@ substitutions:
 packages:
   device_base: !include common/esp32.yaml
 
-external_components:
-  - source: github://depuits/esphome-SDM-enery-meter
-
 # Disable logging
 logger:
   baud_rate: 0
@@ -18,25 +15,21 @@ uart:
   baud_rate: 9600
   stop_bits: 1
 
+modbus:
+  flow_control_pin: 16
+  
 sensor:
-  - platform: sdm
-    dere_pin: 16
-    baud_rate: 9600
-    channel: 1
-    sdm_phase_1_voltage:
-      name: "Washer voltage"
-    sdm_phase_1_current:
-      name: "Washer current"
-    sdm_phase_1_power:
-      name: "Washer power"
-    sdm_total_active_energy:
+  - platform: sdm_meter
+    phase_a:
+      current:
+        name: "Washer current"
+      voltage:
+        name: "Washer voltage"
+      active_power:
+        name: "Washer power"
+    import_active_energy:
       name: "Washer total"
-
-#  - platform: AButt
-#    name: "Doorbell"
-#    retain: False
-#    inverted: True
-#    pin: 27
+    update_interval: 15s
 
 binary_sensor:
   - platform: gpio

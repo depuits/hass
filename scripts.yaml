@@ -126,6 +126,10 @@ doorbell:
     data:
       cmd: playbit
       file: '{{ sound }}'
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.browser_joeri_desktop
+      message: '{{ name }}'
   - service: scene.create
     data:
       scene_id: notify_lights_snapshot
